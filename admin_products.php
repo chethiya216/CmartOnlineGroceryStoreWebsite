@@ -109,6 +109,7 @@ if (isset($_POST['update_product'])) {
             <input type="text" name="name" class="box" placeholder="enter product name" required>
             <input type="number" min="0" name="price" class="box" placeholder="enter product price" required>
             <input type="file" name="image" accept="image/jpg, image/jpeg, image/png" class="box" required>
+            <p id="rec-size">⚠️ Recommended image size 200x200 px.</p>
             <input type="submit" value="add product" name="add_product" class="btn">
         </form>
 
