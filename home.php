@@ -4,13 +4,15 @@ include 'config.php';
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
-if (!isset($user_id)) {
-    header('location: login.php');
-}
 
 if (isset($_POST['add_to_cart'])) {
+
+    if (!$user_id) {
+        header('home.php');
+        exit;
+    }
 
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
@@ -37,7 +39,7 @@ if (isset($_POST['add_to_cart'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title>Home | CMart</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -125,8 +127,6 @@ if (isset($_POST['add_to_cart'])) {
 
     <!-- js file link  -->
     <script src="js/script.js"></script>
-
-
 </body>
 
 </html>

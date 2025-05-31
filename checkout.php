@@ -57,7 +57,7 @@ if (isset($_POST['order_btn'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>checkout</title>
+    <title>Checkout | CMart</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -72,8 +72,8 @@ if (isset($_POST['order_btn'])) {
     <?php include 'header.php'; ?>
 
     <div class="heading">
-        <h3>checkout</h3>
-        <p> <a href="home.php">home</a> / checkout </p>
+        <h3>Checkout</h3>
+        <p> <a href="home.php">Home</a> | Checkout </p>
     </div>
 
     <section class="display-order">
@@ -93,32 +93,32 @@ if (isset($_POST['order_btn'])) {
             echo '<p class="empty">your cart is empty</p>';
         }
         ?>
-        <div class="grand-total"> grand total : <span>$<?php echo $grand_total; ?>/-</span> </div>
+        <div class="grand-total"> Grand Total : <span>$<?php echo $grand_total; ?>/-</span> </div>
 
     </section>
 
     <section class="checkout">
 
         <form action="" method="post">
-            <h3>place your order</h3>
+            <h3>Place your order</h3>
             <div class="flex">
                 <div class="inputBox">
-                    <span>your name :</span>
-                    <input type="text" name="name" required placeholder="enter your name">
+                    <span>Your name :</span>
+                    <input type="text" name="name" required placeholder="Enter your name">
                 </div>
                 <div class="inputBox">
-                    <span>your phone number :</span>
-                    <input type="number" name="number" required placeholder="enter your number">
+                    <span>Your phone number :</span>
+                    <input type="number" name="number" required placeholder="Enter your number">
                 </div>
                 <div class="inputBox">
-                    <span>your email :</span>
-                    <input type="email" name="email" required placeholder="enter your email">
+                    <span>Your email :</span>
+                    <input type="email" name="email" required placeholder="Enter your email">
                 </div>
                 <div class="inputBox">
-                    <span>payment method :</span>
+                    <span>Payment method :</span>
                     <select name="method">
-                        <option value="cash on delivery">cash on delivery</option>
-                        <option value="credit card">credit card</option>
+                        <option value="cash on delivery">Cash on delivery</option>
+                        <option value="credit card">Credit card</option>
                     </select>
                 </div>
                 
