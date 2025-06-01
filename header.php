@@ -25,11 +25,11 @@ if (isset($message)) {
 
             <nav class="navbar">
                 <?php  ?>
-                <a href="home.php">home</a>
-                <a href="shop.php">shop</a>
-                <a href="orders.php">orders</a>
-                <a href="contact.php">contact</a>
-                <a href="about.php">about</a>
+                <a href="home.php">Home</a>
+                <a href="shop.php">Shop</a>
+                <a href="orders.php">Orders</a>
+                <a href="contact.php">Contact</a>
+                <a href="about.php">About</a>
 
             </nav>
 
@@ -56,10 +56,10 @@ if (isset($message)) {
                 <?php if (isset($user_id)  && $user_id): ?>
                     <p>Username : <span><?php echo $_SESSION['user_name']; ?></span></p>
                     <p>Email : <span><?php echo $_SESSION['user_email']; ?></span></p>
-                    <a href="logout.php" class="delete-btn">logout</a>
+                    <a href="logout.php" class="delete-btn">Logout</a>
                 <?php else: ?>
                     <div class="log">
-                        <p>new <a href="login.php">login</a> | <a href="register.php">register</a></p>
+                        <p>New <a href="login.php">Login</a> | <a href="register.php">Register</a></p>
                     </div>
                 <?php endif ?>
             </div>
