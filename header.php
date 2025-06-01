@@ -24,6 +24,7 @@ if (isset($message)) {
 
 
             <nav class="navbar">
+                <?php  ?>
                 <a href="home.php">home</a>
                 <a href="shop.php">shop</a>
                 <a href="orders.php">orders</a>
@@ -45,18 +46,22 @@ if (isset($message)) {
 
                 <a href="cart.php"> <i class="fas fa-shopping-cart"></i> <span>(<?php echo $cart_rows_number; ?>)</span> </a>
 
-                
-
-                <div class="log">
+                <!-- <div class="log">
                     <p>new <a href="login.php">login</a> | <a href="register.php">register</a> </p>
-                </div>
+                </div> -->
 
             </div>
 
             <div class="user-box">
-                <p>username : <span><?php echo $_SESSION['user_name']; ?></span></p>
-                <p>email : <span><?php echo $_SESSION['user_email']; ?></span></p>
-                <a href="logout.php" class="delete-btn">logout</a>
+                <?php if (isset($user_id)  && $user_id): ?>
+                    <p>Username : <span><?php echo $_SESSION['user_name']; ?></span></p>
+                    <p>Email : <span><?php echo $_SESSION['user_email']; ?></span></p>
+                    <a href="logout.php" class="delete-btn">logout</a>
+                <?php else: ?>
+                    <div class="log">
+                        <p>new <a href="login.php">login</a> | <a href="register.php">register</a></p>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
     </div>

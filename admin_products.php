@@ -27,7 +27,7 @@ if (isset($_POST['add_product'])) {
         $add_product_query = mysqli_query($conn, "INSERT INTO `products`(name, price, image) VALUES('$name', '$price', '$image')") or die('query failed');
 
         if ($add_product_query) {
-            if ($image_size > 2000000) {
+            if ($image_size > 2048) {
                 $message[] = 'image size is too large';
             } else {
                 move_uploaded_file($image_tmp_name, $image_folder);
