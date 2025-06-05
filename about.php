@@ -20,7 +20,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>about</title>
+    <title>About</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -35,8 +35,8 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     <?php include 'header.php'; ?>
 
     <div class="heading">
-        <h3>what we do..</h3>
-        <p> <a href="home.php">home</a> / about </p>
+        <h3>What We Do..</h3>
+        <p> <a href="home.php">Home</a> / About </p>
     </div>
 
     <section class="about">
@@ -89,7 +89,6 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                         
                         </div>
 
-
                 <?php
                     };
                 } else {
@@ -102,11 +101,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
         </div>
 
-        
-
     </section>
-
-
 
     <?php include 'footer.php'; ?>
 
