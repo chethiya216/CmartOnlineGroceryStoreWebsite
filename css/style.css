@@ -492,7 +492,7 @@ section{
 .products .box-container {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-   gap: 1.5rem;
+   gap: 0.5rem;
    justify-content: center;
    background: var(--white);
 }
@@ -506,6 +506,13 @@ section{
    position: relative;
    transition: all 0.3s ease;
    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+   width: 30rem; /* Fixed width */
+   min-width: 30rem; /* Prevent shrinking */
+   height: 45rem; /* Fixed height */
+   min-height: 45rem; /* Prevent shrinking */
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between; /* Distribute content evenly */
 }
 
 .products .box-container .box:hover {
