@@ -21,8 +21,6 @@ if (isset($message)) {
                 <a href="home.php" class="logo"> CMart</a>
             </div>
 
-
-
             <nav class="navbar">
                 <?php  ?>
                 <a href="home.php">Home</a>

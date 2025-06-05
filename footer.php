@@ -17,6 +17,6 @@
             <p> <i class="fas fa-envelope"></i> chethiya216@gmail.com </p>
             <p> <i class="fas fa-map-marker-alt"></i> Majuwana road, Gonapinuwala </p>
         </div>
-
     </div>
+    <p class="rights">All rights reserved @Chethiya Lakshan</p>
 </section>

@@ -13,6 +13,12 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 if (isset($_POST['add_to_cart'])) {
 
+    if (!$user_id) {
+        $_SESSION['redirect_message'] = 'Please login to add items to your cart';
+        header('location:login.php');
+        exit;
+    }
+
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
     $product_image = $_POST['product_image'];
@@ -37,7 +43,7 @@ if (isset($_POST['add_to_cart'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shop</title>
+    <title>Shop</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -51,13 +57,13 @@ if (isset($_POST['add_to_cart'])) {
 
     <?php include 'header.php'; ?>
     <div class="heading">
-        <h3>our store</h3>
-        <p> <a href="home.php">home</a> / shop </p>
+        <h3>Our Store</h3>
+        <p> <a href="home.php">Home</a> / Shop </p>
     </div>
 
     <section class="products">
 
-        <h1 class="title">latest products</h1>
+        <h1 class="title">Latest Products</h1>
 
         <div class="box-container">
 
@@ -85,13 +91,6 @@ if (isset($_POST['add_to_cart'])) {
         </div>
 
     </section>
-
-
-
-
-
-
-
 
     <?php include 'footer.php'; ?>
 
