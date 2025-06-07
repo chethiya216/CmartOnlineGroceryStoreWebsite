@@ -48,7 +48,21 @@ if (isset($_POST['submit'])) {
 
     <!--   css file link  -->
     <link rel="stylesheet" href="css/style.css">
-
+    <style>
+        .input-group {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+            font-size: 1.8rem;
+        }
+    </style>
 </head>
 
 <body style="background-image: url(images/background.png);">
@@ -68,16 +82,47 @@ if (isset($_POST['submit'])) {
 
     <div class="form-container">
 
-        <form action="" method="post" >
+        <!-- <form action="" method="post">
             <h3>Login now</h3>
             <input type="email" name="email" placeholder="Enter your email" required class="box">
-            <input type="password" name="password" placeholder="Enter your password" required class="box">
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="passwordField" placeholder="Enter your password" required class="box">
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+            </div>
             <input type="submit" name="submit" value="login now" class="btn">
             <p>Don't have an account? <a href="register.php">Register Now</a></p>
-        </form>
+        </form> -->
+        <form action="" method="post" class="form">
+                <h3>Login Now</h3>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Enter your email" required class="box form-control">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Enter your password" required class="box form-control" id="loginPassword">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword', this)"></i>
+                </div>
+                <input type="submit" name="submit" value="Login Now" class="btn">
+                <p>Don't have an account? <a href="register.php">Register Now</a></p>
+            </form>
 
     </div>
-
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('passwordField');
+        
+        togglePassword.addEventListener('click', function() {
+            // Toggle the password field type
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            
+            // Toggle the eye icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 
 </html>

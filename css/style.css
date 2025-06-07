@@ -364,6 +364,9 @@ section{
 
 .header .header-2 .flex .user-box.active{
    display: inline-block;
+   text-align: left;
+   justify-content: center;
+   align-items: center;
 }
 
 .header .header-2 .flex .user-box p{

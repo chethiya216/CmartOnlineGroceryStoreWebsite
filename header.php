@@ -44,9 +44,9 @@ if (isset($message)) {
 
                 <a href="cart.php"> <i class="fas fa-shopping-cart"></i> <span>(<?php echo $cart_rows_number; ?>)</span> </a>
 
-                <!-- <div class="log">
-                    <p>new <a href="login.php">login</a> | <a href="register.php">register</a> </p>
-                </div> -->
+                <div class="log">
+                    <p>New <a href="login.php">Login</a> | <a href="register.php">Register</a> </p>
+                </div>
 
             </div>
 
