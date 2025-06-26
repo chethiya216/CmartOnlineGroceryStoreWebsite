@@ -53,18 +53,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body background="images/background.png">
-    <?php
-    if (isset($message)) {
-        foreach ($message as $message) {
-            echo '
-            <div class="message">
-                <span>' . $message . '</span>
-                <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-            </div>
-            ';
-        }
-    }
-    ?>
+        
 
     <div class="login-container">
         <div class="login-header">
@@ -75,7 +64,9 @@ if (isset($_POST['submit'])) {
             <p>Create Your Account</p>
             <p>Join us today and start shopping!</p>
         </div>
-
+        <?php if (isset($message)): ?>
+            <div class="alert"><?= $message[0] ?></div>
+        <?php endif; ?>
         <form action="" method="post">
             <div class="form-group">
                 <i class="fas fa-user input-icon"></i>
