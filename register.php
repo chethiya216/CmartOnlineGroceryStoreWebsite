@@ -32,47 +32,103 @@ if (isset($_POST['submit'])) {
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register | CMart</title>
-
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!--   css file link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
-
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: larger;
+        }
+    </style>
 </head>
 
-<body style="background-image: url(images/background.png);">
+<body background="images/background.png">
+        
 
-    <?php
-    if (isset($message)) {
-        foreach ($message as $message) {
-            echo '
-      <div class="message">
-         <span>' . $message . '</span>
-         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-      </div>
-      ';
-        }
-    }
-    ?>
-
-    <div class="form-container">
-
+    <div class="login-container">
+        <div class="login-header">
+            <p class="header-title">
+                <i class="fas fa-shopping-cart"></i>
+                CMart
+            </p>
+            <p>Create Your Account</p>
+            <p>Join us today and start shopping!</p>
+        </div>
+        <?php if (isset($message)): ?>
+            <div class="alert"><?= $message[0] ?></div>
+        <?php endif; ?>
         <form action="" method="post">
-            <h3>Register Now</h3>
-            <input type="text" name="name" placeholder="Enter your name" required class="box">
-            <input type="email" name="email" placeholder="Enter your email" required class="box">
-            <input type="password" name="password" placeholder="Enter your password" required class="box">
-            <input type="password" name="cpassword" placeholder="Confirm your password" required class="box">
-            <input type="submit" name="submit" value="register now" class="btn">
-            <p>Already have an account? <a href="login.php">Login Now</a></p>
-        </form>
+            <div class="form-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" name="name" placeholder="Enter your full name" required>
+            </div>
 
+            <div class="form-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" name="email" placeholder="Enter your email address" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="password" id="password" placeholder="Create a password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="cpassword" id="cpassword" placeholder="Confirm your password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('cpassword', this)"></i>
+            </div>
+
+            <div class="register-button-wrapper">
+                <!-- <input type="submit" name="submit" value="Create Account" class="login-btn"> -->
+                <button type="submit" name="submit" class="login-btn">Create Account</button>
+            </div>
+
+            <div class="divider"><span>or</span></div>
+
+            <div class="register-link">
+                Already have an account? <a href="login.php">Sign In</a>
+            </div>
+        </form>
     </div>
 
+    <script>
+
+        // Add smooth focus transitions
+        document.querySelectorAll('.form-group input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+
+        // Password confirmation validation
+        document.getElementById('cpassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#ff6b6b';
+            } else {
+                this.style.borderColor = '#e1e8ed';
+            }
+        });
+    </script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

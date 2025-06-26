@@ -18,10 +18,31 @@
    --light-bg:#f5f5f5;
    --border:.1rem solid var(--black);
    --box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
+
+   --teal: #2CA58D;
+   --teal-hover: #1e7867;
+
+   --purple: #9d4edd;
+   --purple-light: #c77dff;
+
+   --red: #e63946;
+   --orange: #f4a261;
+   --yellow: #ffcc00;
+
+   --black: #212529;
+   --white: #ffffff;
+   --gray-dark: #6c757d;
+   --gray: #adb5bd;
+   --gray-light: #dee2e6;
+   --light-bg: #f8f9fa;
+
+   --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.1);
+   --border: 1px solid var(--gray-light);
 }
 
+
 *{
-   font-family: '', sans-serif;
+   font-family: 'Roboto', 'Segoe UI', sans-serif;
    margin:0; padding:0;
    box-sizing: border-box;
    outline: none; border:none;
@@ -1189,6 +1210,240 @@ section{
 
 .footer .rights span{
    color: var(--purple);
+}
+
+
+/* Login form---------------------- */
+
+/* .login-container {
+   background: var(--green5);
+   padding: 2rem;
+   border-radius: 10px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+   width: 100%;
+   max-width: 500px;
+} */
+
+.login-container {
+   background: var(--green5);
+   padding: 4rem 4.5rem;
+   border-radius: 20px;
+   box-shadow: 
+       0 20px 40px var(--shadow-heavy),
+       0 0 0 1px rgba(255, 255, 255, 0.2);
+   width: 100%;
+   max-width: 450px;
+   position: relative;
+   z-index: 2;
+   transform: translateY(0);
+   transition: all 0.3s ease;
+}
+
+.login-header {
+   text-align: center;
+   margin-bottom: 1.5rem;
+}
+
+.login-header i {
+   font-size: 2.5rem;
+   color: var(--button);
+}
+
+/* .login-header .header-title {
+   margin: 1.5rem 0 1rem;
+   color: var(--black);
+} */
+
+.header-title {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 0.5rem;
+   font-size: 2.5rem;
+   font-weight: 700;
+   color: var(--black);
+   background-clip: text;
+   margin-bottom: 0.5rem;
+}
+
+.login-header p {
+   color: var(--black);
+   font-size: 1.6rem;
+}
+
+.form-group {
+   position: relative;
+   margin-bottom: 1.5rem;
+   width: 100%;
+}
+
+.button-wrapper {
+   display: flex;
+   justify-content: center; /* Centers the button horizontally */
+   margin-top: 1rem; /* Optional: Adds space above the button */
+}
+.register-button-wrapper {
+   display: flex;
+   justify-content: center; /* Centers the button horizontally */
+   margin-top: 1rem; /* Optional: Adds space above the button */
+}
+
+.register-button-wrapper button {
+   width: 150px;
+}
+
+.form-group input {
+   width: 100%;
+   padding: 12px 40px 12px 38px;
+   font-size: 1.6rem;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   outline: none;
+   align-self: center;
+   box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.form-group i.input-icon {
+   position: absolute;
+   top: 50%;
+   left: 10px;
+   transform: translateY(-50%);
+   color: #888;
+   font-size: 1.6rem;
+}
+
+.form-group i.password-toggle {
+   position: absolute;
+   right: 10px;
+   top: 50%;
+   transform: translateY(-50%);
+   cursor: pointer;
+   color: #888;
+   font-size: 1.4rem;
+}
+
+.login-btn {
+   width: 100px;
+   padding: 12px;
+   background-color: var(--button);
+   border: none;
+   border-radius: 5px;
+   color: var(--white);
+   font-size: 1.6rem;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+   background-color: var(--button-hover);
+}
+
+.divider {
+   display: flex;
+   align-items: center;
+   text-align: center;
+   margin: 1.5rem 0;
+   color: #888;
+   font-size: 1.6rem;
+}
+
+.divider::before,
+.divider::after {
+   content: '';
+   flex: 1;
+   border-bottom: 1px solid #ccc;
+   margin: 0 0.75rem;
+}
+
+.register-link {
+   text-align: center;
+   font-size: 1.5rem;
+}
+
+.register-link a {
+   color: var(--button);
+   text-decoration: none;
+   font-weight: 600;
+}
+
+.alert {
+   background-color: #f8d7da;
+   color: #721c24;
+   padding: 10px;
+   margin-bottom: 1rem;
+   border: 1px solid #f5c6cb;
+   border-radius: 5px;
+}
+
+.login-header .header-title {
+   font-size: 4.5rem;
+   color: var(--black);
+   margin-top: 0.5rem;
+   font-weight: 700;
+   font-family: 'Roboto', 'Segoe UI', sans-serif;
+}
+
+/*! Register page--------  */
+
+.register-link,
+.login-link {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.register-link a,
+.login-link a {
+    color: var(--button);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Message style (custom for register) */
+.message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message i {
+    cursor: pointer;
+}
+
+/* Password strength styles */
+.password-strength {
+    display: none;
+    margin-top: 5px;
+}
+
+.password-strength.show {
+    display: block;
+}
+
+.password-strength-bar {
+    height: 5px;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.password-strength-bar.weak {
+    width: 33%;
+    background-color: #ff4d4d;
+}
+
+.password-strength-bar.medium {
+    width: 66%;
+    background-color: #ffaa00;
+}
+
+.password-strength-bar.strong {
+    width: 100%;
+    background-color: #00cc00;
 }
 
 
