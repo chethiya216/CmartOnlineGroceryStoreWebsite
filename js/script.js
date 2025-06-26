@@ -22,3 +22,58 @@ window.onscroll = () =>{
       document.querySelector('.header .header-2').classList.remove('active');
    }
 }
+
+// Login form validation---------------------------
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+   const email = document.getElementById('email').value;
+   const password = document.getElementById('password').value;
+
+   if (!email || !password) {
+       e.preventDefault();
+       showMessage('Please fill in all required fields');
+       resetLoginButton();
+       return false;
+   }
+
+   if (!isValidEmail(email)) {
+       e.preventDefault();
+       showMessage('Please enter a valid email address');
+       resetLoginButton();
+       return false;
+   }
+});
+
+function isValidEmail(email) {
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   return emailRegex.test(email);
+}
+
+function resetLoginButton() {
+   const loginBtn = document.getElementById('loginBtn');
+   loginBtn.classList.remove('btn-loading');
+   loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Sign In';
+   loginBtn.disabled = false;
+}
+
+// Auto-hide alerts after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+   setTimeout(function() {
+       const alerts = document.querySelectorAll('.alert');
+       alerts.forEach(function(alert) {
+           const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+           bsAlert.close();
+       });
+   }, 5000);
+});
+
+// Add focus effects to form controls
+document.querySelectorAll('.form-control').forEach(function(input) {
+   input.addEventListener('focus', function() {
+       this.classList.add('border-primary');
+   });
+
+   input.addEventListener('blur', function() {
+       this.classList.remove('border-primary');
+   });
+});

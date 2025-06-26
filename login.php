@@ -34,94 +34,81 @@ if (isset($_POST['submit'])) {
 
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login | CMart</title>
-
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!--   css file link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+
     <style>
-        .input-group {
-            position: relative;
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: url('images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: larger;
         }
-        
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #777;
-            font-size: 1.8rem;
-        }
+
     </style>
 </head>
 
-<body style="background-image: url(images/background.png);">
+<body>
 
-    <?php
-    if (isset($message)) {
-        foreach ($message as $message) {
-            echo '
-      <div class="message">
-         <span>' . $message . '</span>
-         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-      </div>
-      ';
-        }
-    }
-    ?>
+    <div class="login-container">
+        <div class="login-header">
+            <p class="header-title"><i class="fas fa-shopping-cart"></i>CMart</p>
+            <p>Welcome back! Please sign in</p>
+        </div>
 
-    <div class="form-container">
+        <?php if (isset($message)): ?>
+            <div class="alert"><?= $message[0] ?></div>
+        <?php endif; ?>
 
-        <!-- <form action="" method="post">
-            <h3>Login now</h3>
-            <input type="email" name="email" placeholder="Enter your email" required class="box">
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" name="password" id="passwordField" placeholder="Enter your password" required class="box">
-                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+        <form action="" method="post">
+            <div class="form-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" name="email" placeholder="Enter your email" required>
             </div>
-            <input type="submit" name="submit" value="login now" class="btn">
-            <p>Don't have an account? <a href="register.php">Register Now</a></p>
-        </form> -->
-        <form action="" method="post" class="form">
-                <h3>Login Now</h3>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" name="email" placeholder="Enter your email" required class="box form-control">
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="password" placeholder="Enter your password" required class="box form-control" id="loginPassword">
-                    <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword', this)"></i>
-                </div>
-                <input type="submit" name="submit" value="Login Now" class="btn">
-                <p>Don't have an account? <a href="register.php">Register Now</a></p>
-            </form>
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+            </div>
+            <button type="submit" name="submit" class="login-btn">Sign In</button>
+        </form>
 
+        <div class="divider"><span>or</span></div>
+
+        <div class="register-link">
+            Don't have an account? <a href="register.php">Create Account</a>
+        </div>
     </div>
+
     <script>
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordField = document.getElementById('passwordField');
-        
-        togglePassword.addEventListener('click', function() {
-            // Toggle the password field type
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            
-            // Toggle the eye icon
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
+        function togglePassword(icon) {
+            const password = document.getElementById('password');
+            if (password.type === "password") {
+                password.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                password.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
     </script>
 </body>
 

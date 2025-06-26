@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 
 </head>
 
-<body style="background-image: url(images/background.png);">
+<body background="images/background.png">
 
     <?php
     if (isset($message)) {
