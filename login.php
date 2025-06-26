@@ -44,6 +44,7 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login | CMart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
 
     <style>
@@ -69,7 +70,7 @@ if (isset($_POST['submit'])) {
     <div class="login-container">
         <div class="login-header">
             <p class="header-title"><i class="fas fa-shopping-cart"></i>CMart</p>
-            <p>Welcome back! Please sign in</p>
+            <p>Welcome back! Please Sign In</p>
         </div>
 
         <?php if (isset($message)): ?>
@@ -86,7 +87,9 @@ if (isset($_POST['submit'])) {
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
                 <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
             </div>
-            <button type="submit" name="submit" class="login-btn">Sign In</button>
+            <div class="button-wrapper">
+                <button type="submit" name="submit" class="login-btn">Sign In</button>
+            </div>
         </form>
 
         <div class="divider"><span>or</span></div>
