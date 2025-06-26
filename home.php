@@ -106,7 +106,7 @@ if (isset($_POST['add_to_cart'])) {
         <div class="content">
             <h3>Need Help?</h3>
             <p>Don't hesitate to get in touch with our customer service management.</p>
-            <a href="#" class="white-btn">Contact Us</a>
+            <a href="contact.php" class="white-btn">Contact Us</a>
         </div>
     </section>
 

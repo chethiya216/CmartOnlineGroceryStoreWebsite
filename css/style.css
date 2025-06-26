@@ -668,7 +668,7 @@ section{
 
 .home-contact {
    background-color: var(--green1);
-   padding: 8rem 2rem;
+   padding: 3rem 2rem;
    text-align: center;
 }
 
@@ -681,7 +681,7 @@ section{
    font-size: 3.5rem;
    text-transform: uppercase;
    color: var(--white);
-   margin-bottom: 2rem;
+   /* margin-bottom: 2rem; */
 }
 
 .home-contact .content p {
@@ -689,7 +689,7 @@ section{
    line-height: 1.8;
    color: var(--light-white);
    font-size: 2rem;
-   margin-bottom: 3rem;
+   /* margin-bottom: 3rem; */
 }
 
 .home-contact .content .white-btn {
@@ -1380,7 +1380,6 @@ section{
    color: var(--black);
    margin-top: 0.5rem;
    font-weight: 700;
-   font-family: 'Roboto', 'Segoe UI', sans-serif;
 }
 
 /*! Register page--------  */
