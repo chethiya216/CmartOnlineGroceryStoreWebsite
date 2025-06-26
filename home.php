@@ -9,11 +9,6 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 if (isset($_POST['add_to_cart'])) {
 
-    // if (!$user_id) {
-    //     header('home.php');
-    //     exit;
-    // }
-
     if (!$user_id) {
         $_SESSION['redirect_message'] = 'Please login to add items to your cart';
         header('location:login.php');
@@ -59,7 +54,7 @@ if (isset($_POST['add_to_cart'])) {
         <div class="content">
             <h3>Freshness You Can Trust, Savings You Deserve</h3>
             <p>Our commitment is unwavering. With quality guaranteed and prices that delight, we ensure every purchase brings satisfaction and value. Trust in freshness, revel in savings.</p>
-            <a href="#" class="white-btn">Discover More</a>
+            <a href="shop.php" class="white-btn">Discover More</a>
         </div>
     </section>
 
@@ -88,7 +83,7 @@ if (isset($_POST['add_to_cart'])) {
                     <?php
                         }
                     } else {
-                        echo '<p class="empty">no products added yet!</p>';
+                        echo '<p class="empty">No products added yet!</p>';
                     }
                     ?>
 
