@@ -52,7 +52,6 @@ if (isset($_POST['submit'])) {
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', sans-serif;
             background: url('images/background.png') no-repeat center center fixed;
             background-size: cover;
             display: flex;
@@ -98,21 +97,7 @@ if (isset($_POST['submit'])) {
             Don't have an account? <a href="register.php">Create Account</a>
         </div>
     </div>
-
-    <script>
-        function togglePassword(icon) {
-            const password = document.getElementById('password');
-            if (password.type === "password") {
-                password.type = "text";
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                password.type = "password";
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-    </script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

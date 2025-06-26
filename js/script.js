@@ -49,13 +49,6 @@ function isValidEmail(email) {
    return emailRegex.test(email);
 }
 
-function resetLoginButton() {
-   const loginBtn = document.getElementById('loginBtn');
-   loginBtn.classList.remove('btn-loading');
-   loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Sign In';
-   loginBtn.disabled = false;
-}
-
 // Auto-hide alerts after 5 seconds
 document.addEventListener('DOMContentLoaded', function() {
    setTimeout(function() {
@@ -67,13 +60,31 @@ document.addEventListener('DOMContentLoaded', function() {
    }, 5000);
 });
 
-// Add focus effects to form controls
-document.querySelectorAll('.form-control').forEach(function(input) {
-   input.addEventListener('focus', function() {
-       this.classList.add('border-primary');
-   });
+// password toggle functionality for register
+function togglePassword(inputId, icon) {
+   const password = document.getElementById(inputId);
+   if (password.type === "password") {
+       password.type = "text";
+       icon.classList.remove('fa-eye');
+       icon.classList.add('fa-eye-slash');
+   } else {
+       password.type = "password";
+       icon.classList.remove('fa-eye-slash');
+       icon.classList.add('fa-eye');
+   }
+}
 
-   input.addEventListener('blur', function() {
-       this.classList.remove('border-primary');
-   });
-});
+// password toggle functionality for login
+function togglePassword(icon) {
+   const password = document.getElementById('password');
+   if (password.type === "password") {
+       password.type = "text";
+       icon.classList.remove('fa-eye');
+       icon.classList.add('fa-eye-slash');
+   } else {
+       password.type = "password";
+       icon.classList.remove('fa-eye-slash');
+       icon.classList.add('fa-eye');
+   }
+}
+
