@@ -369,31 +369,36 @@ section{
    display: none;
 }
 
-.header .header-2 .flex .user-box{
-   position: absolute ;
-   top:120%; right:2rem;
+.header .user-box {
+   position: absolute;
+   top: 105%;
+   right: 2rem;
    background-color: var(--white);
    border-radius: .5rem;
    box-shadow: var(--box-shadow);
-   border:var(--border);
-   padding:2rem;
+   border: var(--border);
+   padding: 2rem;
    text-align: center;
    width: 30rem;
    display: none;
+   z-index: 1000;
+}
+
+.header .user-box.active {
+   display: block;
    animation: fadeIn .2s linear;
 }
 
-.header .header-2 .flex .user-box.active{
-   display: inline-block;
-   text-align: left;
-   justify-content: center;
-   align-items: center;
+.header .header-2 .flex .user-box .user-box-wrapper{
+   display: flex;
+   flex-direction: column;
+   justify-content: left;
 }
 
 .header .header-2 .flex .user-box p{
    font-size: 2rem;
    color:var(--light-color);
-   margin-bottom: 1.5rem;
+   margin-bottom: 1rem;
 }
 
 .header .header-2 .flex .user-box p span{
@@ -404,6 +409,10 @@ section{
    margin-top: 0;
 }
 
+@keyframes fadeIn {
+   0% { opacity: 0; transform: translateY(-10px); }
+   100% { opacity: 1; transform: translateY(0); }
+}
 
 /*=============================================
 =            home section video start            =
@@ -411,7 +420,7 @@ section{
 
  .home {
    position: relative;
-   height: 95vh;
+   height: 90vh;
    display: flex;
    align-items: center;
    overflow: hidden;
@@ -420,7 +429,7 @@ section{
 
 .home .content {
    text-align: left;
-   width: 60rem;
+   width: 75rem;
    padding: 0 2rem;
    position: relative;
    z-index: 10;

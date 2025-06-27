@@ -10,7 +10,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 if (isset($_POST['add_to_cart'])) {
 
     if (!$user_id) {
-        $_SESSION['redirect_message'] = 'Please login to add items to your cart';
+        $_SESSION['redirect_message'] = 'Please login to add items to your cart!';
         header('location:login.php');
         exit;
     }
@@ -29,8 +29,6 @@ if (isset($_POST['add_to_cart'])) {
         $message[] = 'product added to cart!';
     }
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,14 +38,26 @@ if (isset($_POST['add_to_cart'])) {
     <title>CMart - Fresh Groceries</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    <?php 
+    include 'header.php'; 
+    
+    if(isset($message)){
+        foreach($message as $message){
+            echo '
+            <div class="message">
+                <span>'.$message.'</span>
+                <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+            </div>
+            ';
+        }
+    }
+    ?>
+    
     <!-- Home Section -->
     <section class="home">
         <div class="video-container">
-            <!-- Video background -->
             <video src="images/QuickCart.mp4" autoplay muted loop></video>
         </div>
         
@@ -64,29 +74,27 @@ if (isset($_POST['add_to_cart'])) {
             <h1 class="title">Recent Products</h1>
             
             <div class="box-container">
-                <!-- Product 1 -->
                 <?php
-                    $select_products = mysqli_query($conn, "SELECT * FROM `products` LIMIT 5") or die('query failed');
-                    if (mysqli_num_rows($select_products) > 0) {
-                        while ($fetch_products = mysqli_fetch_assoc($select_products)) {
-                    ?>
-                            <form action="" method="post" class="box">
-                                <img class="image" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
-                                <div class="name"><?php echo $fetch_products['name']; ?></div>
-                                <div class="price">Rs:<?php echo $fetch_products['price']; ?>/-</div>
-                                <input type="number" min="1" name="product_quantity" value="1" class="qty">
-                                <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
-                                <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
-                                <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
-                                <input type="submit" value="add to cart" name="add_to_cart" class="btn">
-                            </form> 
-                    <?php
-                        }
-                    } else {
-                        echo '<p class="empty">No products added yet!</p>';
+                $select_products = mysqli_query($conn, "SELECT * FROM `products` LIMIT 5") or die('query failed');
+                if (mysqli_num_rows($select_products) > 0) {
+                    while ($fetch_products = mysqli_fetch_assoc($select_products)) {
+                ?>
+                        <form action="" method="post" class="box">
+                            <img class="image" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
+                            <div class="name"><?php echo $fetch_products['name']; ?></div>
+                            <div class="price">Rs:<?php echo $fetch_products['price']; ?>/-</div>
+                            <input type="number" min="1" name="product_quantity" value="1" class="qty">
+                            <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
+                            <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
+                            <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
+                            <input type="submit" value="add to cart" name="add_to_cart" class="btn">
+                        </form> 
+                <?php
                     }
-                    ?>
-
+                } else {
+                    echo '<p class="empty">No products added yet!</p>';
+                }
+                ?>
             </div>
             
             <div class="load-more">
@@ -94,7 +102,6 @@ if (isset($_POST['add_to_cart'])) {
             </div>
         </div>
     </section>
-
 
     <!-- Home Contact Section -->
     <section class="home-contact">
@@ -108,16 +115,48 @@ if (isset($_POST['add_to_cart'])) {
     <?php include 'footer.php'; ?>
 
     <script>
-        // Simple script for smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        // Fixed script for user box toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle user box
+            const userBtn = document.getElementById('user-btn');
+            const userBox = document.querySelector('.user-box');
+            
+            if (userBtn && userBox) {
+                userBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent event from bubbling up
+                    userBox.classList.toggle('active');
+                });
+            }
+            
+            // Close user box when clicking anywhere else
+            document.addEventListener('click', function(e) {
+                if (userBox && userBox.classList.contains('active') && 
+                    !userBox.contains(e.target) && 
+                    e.target !== userBtn) {
+                    userBox.classList.remove('active');
+                }
+            });
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Close messages when clicking the X icon
+            document.querySelectorAll('.message .fa-times').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
                 });
             });
         });
     </script>
-    <script src="js/script.js"></script>
 </body>
 </html>
