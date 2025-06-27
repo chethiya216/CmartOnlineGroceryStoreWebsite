@@ -97,6 +97,39 @@ if (isset($_POST['submit'])) {
             Don't have an account? <a href="register.php">Create Account</a>
         </div>
     </div>
+    <script>
+        document.getElementById('loginForm')
+            .addEventListener('submit', function(e) {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                if (!email || !password) {
+                    e.preventDefault();
+                    showMessage('Please fill in all required fields');
+                    resetLoginButton();
+                    return false;
+                }
+
+                if (!isValidEmail(email)) {
+                    e.preventDefault();
+                    showMessage('Please enter a valid email address');
+                    resetLoginButton();
+                    return false;
+                }
+            }
+            );
+            
+        // Auto-hide alerts after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+        });
+    </script>
     <script src="js/script.js"></script>
 </body>
 
