@@ -1,4 +1,5 @@
 <?php
+// if (isset($_SESSION['user_id']) && $_SESSION['user_id']):
 if (isset($message)) {
     foreach ($message as $message) {
         echo '
@@ -51,9 +52,11 @@ if (isset($message)) {
             </div>
 
             <div class="user-box">
-                <?php if (isset($user_id)  && $user_id): ?>
-                    <p>Username : <span><?php echo $_SESSION['user_name']; ?></span></p>
-                    <p>Email : <span><?php echo $_SESSION['user_email']; ?></span></p>
+                <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id']): ?>
+                    <div class="user-box-wrapper">
+                        <p>Username : <span><?php echo $_SESSION['user_name']; ?></span></p>
+                        <p>Email : <span><?php echo $_SESSION['user_email']; ?></span></p>
+                    </div>
                     <a href="logout.php" class="delete-btn">Logout</a>
                 <?php else: ?>
                     <div class="log">

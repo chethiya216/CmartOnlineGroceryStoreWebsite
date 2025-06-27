@@ -23,42 +23,12 @@ window.onscroll = () =>{
    }
 }
 
-// Login form validation---------------------------
-
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-   const email = document.getElementById('email').value;
-   const password = document.getElementById('password').value;
-
-   if (!email || !password) {
-       e.preventDefault();
-       showMessage('Please fill in all required fields');
-       resetLoginButton();
-       return false;
-   }
-
-   if (!isValidEmail(email)) {
-       e.preventDefault();
-       showMessage('Please enter a valid email address');
-       resetLoginButton();
-       return false;
-   }
-});
 
 function isValidEmail(email) {
    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    return emailRegex.test(email);
 }
 
-// Auto-hide alerts after 5 seconds
-document.addEventListener('DOMContentLoaded', function() {
-   setTimeout(function() {
-       const alerts = document.querySelectorAll('.alert');
-       alerts.forEach(function(alert) {
-           const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
-           bsAlert.close();
-       });
-   }, 5000);
-});
 
 // password toggle functionality for register
 function togglePassword(inputId, icon) {
