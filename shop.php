@@ -43,7 +43,7 @@ if (isset($_POST['add_to_cart'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop</title>
+    <title>Shop | CMart</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -75,7 +75,10 @@ if (isset($_POST['add_to_cart'])) {
                     <form action="" method="post" class="box">
                         <img class="image" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                         <div class="name"><?php echo $fetch_products['name']; ?></div>
-                        <div class="price">Rs:<?php echo $fetch_products['price']; ?>/-</div>
+                        <div class="price-qty">
+                                <div class="price">Rs:<?php echo $fetch_products['price']; ?>/-</div>
+                                <div class="prod-qty">(<?php echo $fetch_products['qty']; ?> left)</div>
+                        </div>
                         <input type="number" min="1" name="product_quantity" value="1" class="qty">
                         <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
                         <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">

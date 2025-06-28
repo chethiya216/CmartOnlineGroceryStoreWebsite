@@ -27,6 +27,8 @@ if (isset($_POST['order_btn'])) {
             $cart_products[] = $cart_item['name'] . ' (' . $cart_item['quantity'] . ') ';
             $sub_total = ($cart_item['price'] * $cart_item['quantity']);
             $cart_total += $sub_total;
+
+            mysqli_query($conn, "UPDATE `products` SET qty = qty - {$cart_item['quantity']} WHERE name = '{$cart_item['name']}'") or die('query failed');
         }
     }
 
