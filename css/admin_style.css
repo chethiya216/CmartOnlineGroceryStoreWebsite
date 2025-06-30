@@ -357,8 +357,8 @@ section{
 } */
 
 .show-products .box-container .box img{
-   height: 25rem;
-   width: 25rem;
+   height: 10rem;
+   width: auto;
 }
 
 .show-products .box-container .box .name{
