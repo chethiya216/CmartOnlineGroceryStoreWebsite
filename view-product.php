@@ -1,10 +1,32 @@
 <?php 
 include("config.php");
 session_start();
-if (isset($_SESSION["user_id"])) {
-    $user_id = $_SESSION["user_id"];
-} else {
-    $user_id = null;
+
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+$product_id = $_GET['id'] ?? null;
+
+if (isset($_POST['add_to_cart'])) {
+
+    if (!$user_id) {
+        $_SESSION['redirect_message'] = 'Please login to add items to your cart';
+        header('location:login.php');
+        exit;
+    }
+
+    $product_id = $_POST['product_id'];
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $product_image = $_POST['product_image'];
+    $product_quantity = $_POST['product_quantity'];
+
+    $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE product_id = '$product_id' AND user_id = '$user_id'") or die('query failed');
+
+    if (mysqli_num_rows($check_cart_numbers) > 0) {
+        $message[] = 'Already added to cart!';
+    } else {
+        mysqli_query($conn, "INSERT INTO `cart`(user_id, product_id, name, price, quantity, image) VALUES('$user_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
+        $message[] = 'Product added to cart!';
+    }
 }
 
 ?>
@@ -14,7 +36,7 @@ if (isset($_SESSION["user_id"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product View - Premium Wireless Headphones</title>
+    <title>Product Name | CMart </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -971,6 +993,7 @@ body {
 
     </style>
 </head>
+<body>
     <?php include 'header.php'; ?>
 
     <!-- Breadcrumb -->
@@ -983,79 +1006,92 @@ body {
             <a href="#" class="breadcrumb-link">Audio</a>
             <i class="fas fa-chevron-right"></i>
             <span class="breadcrumb-current">Wireless Headphones</span>
-        </div>
-    </div> -->
+        </div> -->
+    </div>
 
     <!-- Main Product Section -->
     <main class="product-main">
         <div class="container">
+            <?php
+                $select_product = mysqli_query($conn, "SELECT * FROM `products` WHERE id = '$product_id'") or die('query failed');
+                if (mysqli_num_rows($select_product) > 0) {
+                    while ($fetch_product = mysqli_fetch_assoc($select_product)) {
+            ?>
             <div class="product-container">
                 <!-- Product Images -->
-                <div class="product-images">
-                    <div class="main-image">
-                        <img src="/placeholder.svg?height=500&width=500" alt="Premium Wireless Headphones" id="mainImage">
-                    </div>
-                    
-                </div>
+              <form action="" method="post">
+                  <input type="hidden" name="product_id" value="<?php echo $fetch_product['id']; ?>">
+                  <div class="product-images">
+                      <div class="main-image">
+                          <img src="uploaded_img/<?php echo $fetch_product['image']; ?>" alt="<?php echo $fetch_product['name']; ?>" id="mainImage">
+                      </div>
+                      
+                  </div>
 
-                <!-- Product Details -->
-                <div class="product-details">
-                    <div class="product-header">
-                        <h1 class="product-title">Premium Wireless Noise-Cancelling Headphones</h1>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="rating-text">(4.5) 2,847 reviews</span>
-                        </div>
-                    </div>
+                  <!-- Product Details -->
+                  <div class="product-details">
+                      <div class="product-header">
+                          <h1 class="product-title"><?php echo $fetch_product['name']; ?></h1>
+                          <div class="product-rating">
+                              <div class="stars">
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star"></i>
+                                  <i class="fas fa-star-half-alt"></i>
+                              </div>
+                              <span class="rating-text">(4.5) 2,847 reviews</span>
+                          </div>
+                      </div>
 
-                    <div class="product-price">
-                        <span class="current-price">$199.99</span>
-                    </div>
+                      <div class="product-price">
+                          <span class="current-price">$<?php echo $fetch_product['price']; ?></span>
+                      </div>
 
-                    <div class="product-description">
-                        <p>Experience premium sound quality with our latest wireless noise-cancelling headphones. Featuring advanced ANC technology, 30-hour battery life, and premium comfort padding for all-day listening.</p>
-                    </div>
+                      <!-- <div class="product-description">
+                          <p><?php echo $fetch_product['description']; ?></p>
+                      </div> -->
 
-                    <!-- Product Options -->
-                    <div class="product-options">
-                        <div class="option-group">
-                            <label class="option-label">Variation:</label>
-                            <div class="size-options">
-                                <div class="size-option active">Small</div>
-                                <div class="size-option">Medium</div>
-                                <div class="size-option">Large</div>
-                            </div>
-                        </div>
+                      <!-- Product Options -->
+                      <div class="product-options">
+                          <!-- <div class="option-group">
+                              <label class="option-label">Variation:</label>
+                              <div class="size-options">
+                                  <div class="size-option active">Small</div>
+                                  <div class="size-option">Medium</div>
+                                  <div class="size-option">Large</div>
+                              </div>
+                          </div> -->
 
-                        <div class="option-group">
-                            <label class="option-label">Quantity:</label>
-                            <div class="quantity-selector">
-                                <button class="quantity-btn minus">-</button>
-                                <input type="number" class="quantity-input" value="1" min="1" max="10">
-                                <button class="quantity-btn plus">+</button>
-                            </div>
-                        </div>
-                    </div>
+                          <!-- <div class="option-group">
+                              <label class="option-label">Quantity:</label>
+                              <div class="quantity-selector">
+                                  <button class="quantity-btn minus">-</button>
+                                  <input type="number" class="quantity-input" value="1" min="1" max="10">
+                                  <button class="quantity-btn plus">+</button>
+                              </div>
+                          </div> -->
+                          <?php if ($fetch_product['qty'] > 0) { ?>
+                              <input type="number" min="1" name="product_quantity" value="1" class="qty">
+                          <?php } else { ?>
+                              <input type="number" min="1" name="product_quantity" class="qty" value="0" hidden>
+                          <?php } ?>
+                      </div>
 
-                    <!-- Action Buttons -->
-                    <div class="product-actions">
-                        <button class="btn btn-primary add-to-cart">
-                            <i class="fas fa-shopping-cart"></i>
-                            Add to Cart
-                        </button>
-                        <button class="btn btn-secondary buy-now">
-                            <i class="fas fa-bolt"></i>
-                            Buy Now
-                        </button>
-                    </div>
+                      <!-- Action Buttons -->
+                      <div class="product-actions">
+                          <button class="btn btn-primary add-to-cart" name="add-to-cart">
+                              <i class="fas fa-shopping-cart"></i>
+                              Add to Cart
+                          </button>
+                          <button class="btn btn-secondary buy-now">
+                              <i class="fas fa-bolt"></i>
+                              Buy Now
+                          </button>
+                      </div>
 
-                </div>
+                  </div>
+              </form>
             </div>
 
             <!-- Product Tabs -->
@@ -1138,6 +1174,12 @@ body {
 
                 </div>
             </div>
+            <?php
+                    }
+                } else {
+                    echo '<p class="empty">No products added yet!</p>';
+                }
+            ?>
         </div>
     </main>
 
@@ -1146,570 +1188,570 @@ body {
 
     <script src="js/script.js"></script>
     <script>
-        // DOM Elements
-const thumbnails = document.querySelectorAll(".thumbnail")
-const mainImage = document.getElementById("mainImage")
-const colorOptions = document.querySelectorAll(".color-option")
-const sizeOptions = document.querySelectorAll(".size-option")
-const quantityInput = document.querySelector(".quantity-input")
-const quantityBtns = document.querySelectorAll(".quantity-btn")
-const tabBtns = document.querySelectorAll(".tab-btn")
-const tabPanels = document.querySelectorAll(".tab-panel")
-const addToCartBtn = document.querySelector(".add-to-cart")
-const buyNowBtn = document.querySelector(".buy-now")
-const wishlistBtn = document.querySelector(".btn-wishlist")
+                // DOM Elements
+        const thumbnails = document.querySelectorAll(".thumbnail")
+        const mainImage = document.getElementById("mainImage")
+        const colorOptions = document.querySelectorAll(".color-option")
+        const sizeOptions = document.querySelectorAll(".size-option")
+        const quantityInput = document.querySelector(".quantity-input")
+        const quantityBtns = document.querySelectorAll(".quantity-btn")
+        const tabBtns = document.querySelectorAll(".tab-btn")
+        const tabPanels = document.querySelectorAll(".tab-panel")
+        const addToCartBtn = document.querySelector(".add-to-cart")
+        const buyNowBtn = document.querySelector(".buy-now")
+        const wishlistBtn = document.querySelector(".btn-wishlist")
 
-// Image Gallery
-thumbnails.forEach((thumbnail, index) => {
-  thumbnail.addEventListener("click", () => {
-    // Remove active class from all thumbnails
-    thumbnails.forEach((thumb) => thumb.classList.remove("active"))
+        // Image Gallery
+        thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener("click", () => {
+            // Remove active class from all thumbnails
+            thumbnails.forEach((thumb) => thumb.classList.remove("active"))
 
-    // Add active class to clicked thumbnail
-    thumbnail.classList.add("active")
+            // Add active class to clicked thumbnail
+            thumbnail.classList.add("active")
 
-    // Update main image
-    const newImageSrc = thumbnail.querySelector("img").src
-    mainImage.src = newImageSrc
+            // Update main image
+            const newImageSrc = thumbnail.querySelector("img").src
+            mainImage.src = newImageSrc
 
-    // Add animation effect
-    mainImage.style.opacity = "0"
-    setTimeout(() => {
-      mainImage.style.opacity = "1"
-    }, 150)
-  })
-})
+            // Add animation effect
+            mainImage.style.opacity = "0"
+            setTimeout(() => {
+            mainImage.style.opacity = "1"
+            }, 150)
+        })
+        })
 
-// Color Selection
-colorOptions.forEach((option) => {
-  option.addEventListener("click", () => {
-    colorOptions.forEach((opt) => opt.classList.remove("active"))
-    option.classList.add("active")
+        // Color Selection
+        colorOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+            colorOptions.forEach((opt) => opt.classList.remove("active"))
+            option.classList.add("active")
 
-    // Add selection animation
-    option.style.transform = "scale(0.9)"
-    setTimeout(() => {
-      option.style.transform = "scale(1.1)"
-    }, 100)
-  })
-})
+            // Add selection animation
+            option.style.transform = "scale(0.9)"
+            setTimeout(() => {
+            option.style.transform = "scale(1.1)"
+            }, 100)
+        })
+        })
 
-// Size Selection
-sizeOptions.forEach((option) => {
-  option.addEventListener("click", () => {
-    sizeOptions.forEach((opt) => opt.classList.remove("active"))
-    option.classList.add("active")
+        // Size Selection
+        sizeOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+            sizeOptions.forEach((opt) => opt.classList.remove("active"))
+            option.classList.add("active")
 
-    // Add selection animation
-    option.style.transform = "scale(0.95)"
-    setTimeout(() => {
-      option.style.transform = "scale(1)"
-    }, 150)
-  })
-})
+            // Add selection animation
+            option.style.transform = "scale(0.95)"
+            setTimeout(() => {
+            option.style.transform = "scale(1)"
+            }, 150)
+        })
+        })
 
-// Quantity Controls
-quantityBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const isPlus = btn.classList.contains("plus")
-    const currentValue = Number.parseInt(quantityInput.value)
-    const min = Number.parseInt(quantityInput.min)
-    const max = Number.parseInt(quantityInput.max)
+        // Quantity Controls
+        quantityBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const isPlus = btn.classList.contains("plus")
+            const currentValue = Number.parseInt(quantityInput.value)
+            const min = Number.parseInt(quantityInput.min)
+            const max = Number.parseInt(quantityInput.max)
 
-    if (isPlus && currentValue < max) {
-      quantityInput.value = currentValue + 1
-    } else if (!isPlus && currentValue > min) {
-      quantityInput.value = currentValue - 1
-    }
-
-    // Add button animation
-    btn.style.transform = "scale(0.9)"
-    setTimeout(() => {
-      btn.style.transform = "scale(1)"
-    }, 100)
-  })
-})
-
-// Quantity Input Validation
-quantityInput.addEventListener("input", () => {
-  const min = Number.parseInt(quantityInput.min)
-  const max = Number.parseInt(quantityInput.max)
-  const value = Number.parseInt(quantityInput.value)
-
-  if (value < min) quantityInput.value = min
-  if (value > max) quantityInput.value = max
-})
-
-// Product Tabs
-tabBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const targetTab = btn.dataset.tab
-
-    // Remove active class from all tabs and panels
-    tabBtns.forEach((tab) => tab.classList.remove("active"))
-    tabPanels.forEach((panel) => panel.classList.remove("active"))
-
-    // Add active class to clicked tab and corresponding panel
-    btn.classList.add("active")
-    document.getElementById(targetTab).classList.add("active")
-
-    // Smooth scroll to tabs section
-    document.querySelector(".product-tabs").scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    })
-  })
-})
-
-// Add to Cart Animation
-addToCartBtn.addEventListener("click", (e) => {
-  e.preventDefault()
-
-  // Get selected options
-  const selectedColor = document.querySelector(".color-option.active").dataset.color
-  const selectedSize = document.querySelector(".size-option.active").textContent
-  const quantity = quantityInput.value
-
-  // Create cart item object
-  const cartItem = {
-    name: document.querySelector(".product-title").textContent,
-    price: document.querySelector(".current-price").textContent,
-    color: selectedColor,
-    size: selectedSize,
-    quantity: quantity,
-    image: mainImage.src,
-  }
-
-  // Add loading state
-  addToCartBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...'
-  addToCartBtn.disabled = true
-
-  // Simulate API call
-  setTimeout(() => {
-    // Reset button
-    addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart'
-    addToCartBtn.disabled = false
-
-    // Show success message
-    showNotification("Product added to cart successfully!", "success")
-
-    // Update cart badge (simulate)
-    const cartBadge = document.querySelector(".nav-icon .badge")
-    if (cartBadge) {
-      const currentCount = Number.parseInt(cartBadge.textContent)
-      cartBadge.textContent = currentCount + Number.parseInt(quantity)
-
-      // Animate badge
-      cartBadge.style.transform = "scale(1.5)"
-      setTimeout(() => {
-        cartBadge.style.transform = "scale(1)"
-      }, 200)
-    }
-
-    // Add button success animation
-    addToCartBtn.style.background = "#27ae60"
-    setTimeout(() => {
-      addToCartBtn.style.background = ""
-    }, 1000)
-  }, 1500)
-})
-
-// Buy Now Button
-buyNowBtn.addEventListener("click", (e) => {
-  e.preventDefault()
-
-  // Add loading state
-  buyNowBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...'
-  buyNowBtn.disabled = true
-
-  // Simulate redirect to checkout
-  setTimeout(() => {
-    showNotification("Redirecting to checkout...", "info")
-
-    // Reset button after delay
-    setTimeout(() => {
-      buyNowBtn.innerHTML = '<i class="fas fa-bolt"></i> Buy Now'
-      buyNowBtn.disabled = false
-    }, 2000)
-  }, 1000)
-})
-
-// Wishlist Button
-wishlistBtn.addEventListener("click", (e) => {
-  e.preventDefault()
-
-  const icon = wishlistBtn.querySelector("i")
-  const isWishlisted = icon.classList.contains("fas")
-
-  if (isWishlisted) {
-    icon.classList.remove("fas")
-    icon.classList.add("far")
-    wishlistBtn.style.background = "white"
-    wishlistBtn.style.color = "#e74c3c"
-    showNotification("Removed from wishlist", "info")
-  } else {
-    icon.classList.remove("far")
-    icon.classList.add("fas")
-    wishlistBtn.style.background = "#e74c3c"
-    wishlistBtn.style.color = "white"
-    showNotification("Added to wishlist!", "success")
-
-    // Update wishlist badge
-    const wishlistBadge = document.querySelector(".nav-icon .badge")
-    if (wishlistBadge) {
-      const currentCount = Number.parseInt(wishlistBadge.textContent)
-      wishlistBadge.textContent = currentCount + 1
-    }
-  }
-
-  // Add animation
-  wishlistBtn.style.transform = "scale(0.9)"
-  setTimeout(() => {
-    wishlistBtn.style.transform = "scale(1)"
-  }, 150)
-})
-
-// Image Zoom Effect
-const zoomIcon = document.querySelector(".zoom-icon")
-zoomIcon.addEventListener("click", () => {
-  // Create modal for image zoom
-  const modal = document.createElement("div")
-  modal.className = "image-modal"
-  modal.innerHTML = `
-        <div class="modal-backdrop">
-            <div class="modal-content">
-                <img src="${mainImage.src}" alt="Product Image">
-                <button class="close-modal">&times;</button>
-            </div>
-        </div>
-    `
-
-  // Add modal styles
-  const modalStyles = `
-        .image-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-        }
-        
-        .modal-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    `
-
-  // Add styles to head
-  const styleSheet = document.createElement("style")
-  styleSheet.textContent = modalStyles
-  document.head.appendChild(styleSheet)
-
-  // Add modal to body
-  document.body.appendChild(modal)
-
-  // Close modal functionality
-  const closeModal = () => {
-    modal.remove()
-    styleSheet.remove()
-  }
-
-  modal.querySelector(".close-modal").addEventListener("click", closeModal)
-  modal.querySelector(".modal-backdrop").addEventListener("click", (e) => {
-    if (e.target === e.currentTarget) {
-      closeModal()
-    }
-  })
-
-  // Close on escape key
-  document.addEventListener("keydown", function escapeHandler(e) {
-    if (e.key === "Escape") {
-      closeModal()
-      document.removeEventListener("keydown", escapeHandler)
-    }
-  })
-})
-
-// Review Actions
-document.querySelectorAll(".review-action").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault()
-
-    const action = btn.textContent.trim().toLowerCase()
-
-    if (action.includes("helpful")) {
-      const countSpan = btn.querySelector("span") || btn
-      const currentCount = Number.parseInt(countSpan.textContent.match(/\d+/)[0])
-      countSpan.textContent = countSpan.textContent.replace(/\d+/, currentCount + 1)
-
-      btn.style.color = "#27ae60"
-      showNotification("Thank you for your feedback!", "success")
-    } else if (action.includes("reply")) {
-      showNotification("Reply feature coming soon!", "info")
-    }
-  })
-})
-
-// Related Products Quick View
-document.querySelectorAll(".quick-view").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault()
-    showNotification("Quick view feature coming soon!", "info")
-  })
-})
-
-// Mobile Menu Toggle
-const mobileMenuToggle = document.querySelector(".mobile-menu-toggle")
-const navLinks = document.querySelector(".nav-links")
-
-if (mobileMenuToggle) {
-  mobileMenuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active")
-
-    const icon = mobileMenuToggle.querySelector("i")
-    if (icon.classList.contains("fa-bars")) {
-      icon.classList.remove("fa-bars")
-      icon.classList.add("fa-times")
-    } else {
-      icon.classList.remove("fa-times")
-      icon.classList.add("fa-bars")
-    }
-  })
-}
-
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault()
-    const target = document.querySelector(this.getAttribute("href"))
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-    }
-  })
-})
-
-// Notification System
-function showNotification(message, type = "info") {
-  // Remove existing notifications
-  const existingNotifications = document.querySelectorAll(".notification")
-  existingNotifications.forEach((notification) => notification.remove())
-
-  // Create notification element
-  const notification = document.createElement("div")
-  notification.className = `notification notification-${type}`
-  notification.innerHTML = `
-        <div class="notification-content">
-            <i class="fas fa-${getNotificationIcon(type)}"></i>
-            <span>${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `
-
-  // Add notification styles
-  const notificationStyles = `
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
-            min-width: 300px;
-            max-width: 400px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            animation: slideInRight 0.3s ease;
-        }
-        
-        .notification-success {
-            background: #27ae60;
-            color: white;
-        }
-        
-        .notification-error {
-            background: #e74c3c;
-            color: white;
-        }
-        
-        .notification-info {
-            background: #3498db;
-            color: white;
-        }
-        
-        .notification-warning {
-            background: #f39c12;
-            color: white;
-        }
-        
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px;
-        }
-        
-        .notification-close {
-            background: none;
-            border: none;
-            color: inherit;
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-left: auto;
-            opacity: 0.8;
-            transition: opacity 0.2s ease;
-        }
-        
-        .notification-close:hover {
-            opacity: 1;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
+            if (isPlus && currentValue < max) {
+            quantityInput.value = currentValue + 1
+            } else if (!isPlus && currentValue > min) {
+            quantityInput.value = currentValue - 1
             }
-            to {
-                transform: translateX(0);
-                opacity: 1;
+
+            // Add button animation
+            btn.style.transform = "scale(0.9)"
+            setTimeout(() => {
+            btn.style.transform = "scale(1)"
+            }, 100)
+        })
+        })
+
+        // Quantity Input Validation
+        quantityInput.addEventListener("input", () => {
+        const min = Number.parseInt(quantityInput.min)
+        const max = Number.parseInt(quantityInput.max)
+        const value = Number.parseInt(quantityInput.value)
+
+        if (value < min) quantityInput.value = min
+        if (value > max) quantityInput.value = max
+        })
+
+        // Product Tabs
+        tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const targetTab = btn.dataset.tab
+
+            // Remove active class from all tabs and panels
+            tabBtns.forEach((tab) => tab.classList.remove("active"))
+            tabPanels.forEach((panel) => panel.classList.remove("active"))
+
+            // Add active class to clicked tab and corresponding panel
+            btn.classList.add("active")
+            document.getElementById(targetTab).classList.add("active")
+
+            // Smooth scroll to tabs section
+            document.querySelector(".product-tabs").scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            })
+        })
+        })
+
+        // Add to Cart Animation
+        addToCartBtn.addEventListener("click", (e) => {
+        e.preventDefault()
+
+        // Get selected options
+        const selectedColor = document.querySelector(".color-option.active").dataset.color
+        const selectedSize = document.querySelector(".size-option.active").textContent
+        const quantity = quantityInput.value
+
+        // Create cart item object
+        const cartItem = {
+            name: document.querySelector(".product-title").textContent,
+            price: document.querySelector(".current-price").textContent,
+            color: selectedColor,
+            size: selectedSize,
+            quantity: quantity,
+            image: mainImage.src,
+        }
+
+        // Add loading state
+        addToCartBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...'
+        addToCartBtn.disabled = true
+
+        // Simulate API call
+        setTimeout(() => {
+            // Reset button
+            addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart'
+            addToCartBtn.disabled = false
+
+            // Show success message
+            showNotification("Product added to cart successfully!", "success")
+
+            // Update cart badge (simulate)
+            const cartBadge = document.querySelector(".nav-icon .badge")
+            if (cartBadge) {
+            const currentCount = Number.parseInt(cartBadge.textContent)
+            cartBadge.textContent = currentCount + Number.parseInt(quantity)
+
+            // Animate badge
+            cartBadge.style.transform = "scale(1.5)"
+            setTimeout(() => {
+                cartBadge.style.transform = "scale(1)"
+            }, 200)
+            }
+
+            // Add button success animation
+            addToCartBtn.style.background = "#27ae60"
+            setTimeout(() => {
+            addToCartBtn.style.background = ""
+            }, 1000)
+        }, 1500)
+        })
+
+        // Buy Now Button
+        buyNowBtn.addEventListener("click", (e) => {
+        e.preventDefault()
+
+        // Add loading state
+        buyNowBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...'
+        buyNowBtn.disabled = true
+
+        // Simulate redirect to checkout
+        setTimeout(() => {
+            showNotification("Redirecting to checkout...", "info")
+
+            // Reset button after delay
+            setTimeout(() => {
+            buyNowBtn.innerHTML = '<i class="fas fa-bolt"></i> Buy Now'
+            buyNowBtn.disabled = false
+            }, 2000)
+        }, 1000)
+        })
+
+        // Wishlist Button
+        wishlistBtn.addEventListener("click", (e) => {
+        e.preventDefault()
+
+        const icon = wishlistBtn.querySelector("i")
+        const isWishlisted = icon.classList.contains("fas")
+
+        if (isWishlisted) {
+            icon.classList.remove("fas")
+            icon.classList.add("far")
+            wishlistBtn.style.background = "white"
+            wishlistBtn.style.color = "#e74c3c"
+            showNotification("Removed from wishlist", "info")
+        } else {
+            icon.classList.remove("far")
+            icon.classList.add("fas")
+            wishlistBtn.style.background = "#e74c3c"
+            wishlistBtn.style.color = "white"
+            showNotification("Added to wishlist!", "success")
+
+            // Update wishlist badge
+            const wishlistBadge = document.querySelector(".nav-icon .badge")
+            if (wishlistBadge) {
+            const currentCount = Number.parseInt(wishlistBadge.textContent)
+            wishlistBadge.textContent = currentCount + 1
             }
         }
-        
-        @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
+
+        // Add animation
+        wishlistBtn.style.transform = "scale(0.9)"
+        setTimeout(() => {
+            wishlistBtn.style.transform = "scale(1)"
+        }, 150)
+        })
+
+        // Image Zoom Effect
+        const zoomIcon = document.querySelector(".zoom-icon")
+        zoomIcon.addEventListener("click", () => {
+        // Create modal for image zoom
+        const modal = document.createElement("div")
+        modal.className = "image-modal"
+        modal.innerHTML = `
+                <div class="modal-backdrop">
+                    <div class="modal-content">
+                        <img src="${mainImage.src}" alt="Product Image">
+                        <button class="close-modal">&times;</button>
+                    </div>
+                </div>
+            `
+
+        // Add modal styles
+        const modalStyles = `
+                .image-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.9);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                    animation: fadeIn 0.3s ease;
+                }
+                
+                .modal-content {
+                    position: relative;
+                    max-width: 90%;
+                    max-height: 90%;
+                }
+                
+                .modal-content img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+                
+                .close-modal {
+                    position: absolute;
+                    top: -40px;
+                    right: 0;
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 2rem;
+                    cursor: pointer;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            `
+
+        // Add styles to head
+        const styleSheet = document.createElement("style")
+        styleSheet.textContent = modalStyles
+        document.head.appendChild(styleSheet)
+
+        // Add modal to body
+        document.body.appendChild(modal)
+
+        // Close modal functionality
+        const closeModal = () => {
+            modal.remove()
+            styleSheet.remove()
+        }
+
+        modal.querySelector(".close-modal").addEventListener("click", closeModal)
+        modal.querySelector(".modal-backdrop").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) {
+            closeModal()
             }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
+        })
+
+        // Close on escape key
+        document.addEventListener("keydown", function escapeHandler(e) {
+            if (e.key === "Escape") {
+            closeModal()
+            document.removeEventListener("keydown", escapeHandler)
             }
+        })
+        })
+
+        // Review Actions
+        document.querySelectorAll(".review-action").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault()
+
+            const action = btn.textContent.trim().toLowerCase()
+
+            if (action.includes("helpful")) {
+            const countSpan = btn.querySelector("span") || btn
+            const currentCount = Number.parseInt(countSpan.textContent.match(/\d+/)[0])
+            countSpan.textContent = countSpan.textContent.replace(/\d+/, currentCount + 1)
+
+            btn.style.color = "#27ae60"
+            showNotification("Thank you for your feedback!", "success")
+            } else if (action.includes("reply")) {
+            showNotification("Reply feature coming soon!", "info")
+            }
+        })
+        })
+
+        // Related Products Quick View
+        document.querySelectorAll(".quick-view").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault()
+            showNotification("Quick view feature coming soon!", "info")
+        })
+        })
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.querySelector(".mobile-menu-toggle")
+        const navLinks = document.querySelector(".nav-links")
+
+        if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active")
+
+            const icon = mobileMenuToggle.querySelector("i")
+            if (icon.classList.contains("fa-bars")) {
+            icon.classList.remove("fa-bars")
+            icon.classList.add("fa-times")
+            } else {
+            icon.classList.remove("fa-times")
+            icon.classList.add("fa-bars")
+            }
+        })
         }
-    `
 
-  // Add styles if not already added
-  if (!document.querySelector("#notification-styles")) {
-    const styleSheet = document.createElement("style")
-    styleSheet.id = "notification-styles"
-    styleSheet.textContent = notificationStyles
-    document.head.appendChild(styleSheet)
-  }
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault()
+            const target = document.querySelector(this.getAttribute("href"))
+            if (target) {
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            })
+            }
+        })
+        })
 
-  // Add notification to body
-  document.body.appendChild(notification)
+        // Notification System
+        function showNotification(message, type = "info") {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll(".notification")
+        existingNotifications.forEach((notification) => notification.remove())
 
-  // Auto remove after 5 seconds
-  const autoRemove = setTimeout(() => {
-    removeNotification(notification)
-  }, 5000)
+        // Create notification element
+        const notification = document.createElement("div")
+        notification.className = `notification notification-${type}`
+        notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas fa-${getNotificationIcon(type)}"></i>
+                    <span>${message}</span>
+                    <button class="notification-close">&times;</button>
+                </div>
+            `
 
-  // Close button functionality
-  notification.querySelector(".notification-close").addEventListener("click", () => {
-    clearTimeout(autoRemove)
-    removeNotification(notification)
-  })
-}
+        // Add notification styles
+        const notificationStyles = `
+                .notification {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 10000;
+                    min-width: 300px;
+                    max-width: 400px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    animation: slideInRight 0.3s ease;
+                }
+                
+                .notification-success {
+                    background: #27ae60;
+                    color: white;
+                }
+                
+                .notification-error {
+                    background: #e74c3c;
+                    color: white;
+                }
+                
+                .notification-info {
+                    background: #3498db;
+                    color: white;
+                }
+                
+                .notification-warning {
+                    background: #f39c12;
+                    color: white;
+                }
+                
+                .notification-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 16px;
+                }
+                
+                .notification-close {
+                    background: none;
+                    border: none;
+                    color: inherit;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                    margin-left: auto;
+                    opacity: 0.8;
+                    transition: opacity 0.2s ease;
+                }
+                
+                .notification-close:hover {
+                    opacity: 1;
+                }
+                
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                
+                @keyframes slideOutRight {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `
 
-function getNotificationIcon(type) {
-  switch (type) {
-    case "success":
-      return "check-circle"
-    case "error":
-      return "exclamation-circle"
-    case "warning":
-      return "exclamation-triangle"
-    case "info":
-    default:
-      return "info-circle"
-  }
-}
-
-function removeNotification(notification) {
-  notification.style.animation = "slideOutRight 0.3s ease"
-  setTimeout(() => {
-    if (notification.parentNode) {
-      notification.remove()
-    }
-  }, 300)
-}
-
-// Lazy Loading for Images
-const images = document.querySelectorAll('img[src*="placeholder"]')
-const imageObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const img = entry.target
-      // In a real application, you would replace this with actual image URLs
-      // img.src = img.dataset.src;
-      observer.unobserve(img)
-    }
-  })
-})
-
-images.forEach((img) => imageObserver.observe(img))
-
-// Page Load Animation
-window.addEventListener("load", () => {
-  document.body.classList.add("loaded")
-
-  // Add loaded styles
-  const loadedStyles = `
-        body {
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        // Add styles if not already added
+        if (!document.querySelector("#notification-styles")) {
+            const styleSheet = document.createElement("style")
+            styleSheet.id = "notification-styles"
+            styleSheet.textContent = notificationStyles
+            document.head.appendChild(styleSheet)
         }
-        
-        body.loaded {
-            opacity: 1;
+
+        // Add notification to body
+        document.body.appendChild(notification)
+
+        // Auto remove after 5 seconds
+        const autoRemove = setTimeout(() => {
+            removeNotification(notification)
+        }, 5000)
+
+        // Close button functionality
+        notification.querySelector(".notification-close").addEventListener("click", () => {
+            clearTimeout(autoRemove)
+            removeNotification(notification)
+        })
         }
-    `
 
-  const styleSheet = document.createElement("style")
-  styleSheet.textContent = loadedStyles
-  document.head.appendChild(styleSheet)
-})
+        function getNotificationIcon(type) {
+        switch (type) {
+            case "success":
+            return "check-circle"
+            case "error":
+            return "exclamation-circle"
+            case "warning":
+            return "exclamation-triangle"
+            case "info":
+            default:
+            return "info-circle"
+        }
+        }
 
-// Initialize page
-document.addEventListener("DOMContentLoaded", () => {
-  // Set initial quantity
-  if (quantityInput) {
-    quantityInput.value = 1
-  }
+        function removeNotification(notification) {
+        notification.style.animation = "slideOutRight 0.3s ease"
+        setTimeout(() => {
+            if (notification.parentNode) {
+            notification.remove()
+            }
+        }, 300)
+        }
 
-  // Show welcome message
-  setTimeout(() => {
-    showNotification("Welcome to our product page!", "info")
-  }, 1000)
-})
+        // Lazy Loading for Images
+        const images = document.querySelectorAll('img[src*="placeholder"]')
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+            const img = entry.target
+            // In a real application, you would replace this with actual image URLs
+            // img.src = img.dataset.src;
+            observer.unobserve(img)
+            }
+        })
+        })
+
+        images.forEach((img) => imageObserver.observe(img))
+
+        // Page Load Animation
+        window.addEventListener("load", () => {
+        document.body.classList.add("loaded")
+
+        // Add loaded styles
+        const loadedStyles = `
+                body {
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+                
+                body.loaded {
+                    opacity: 1;
+                }
+            `
+
+        const styleSheet = document.createElement("style")
+        styleSheet.textContent = loadedStyles
+        document.head.appendChild(styleSheet)
+        })
+
+        // Initialize page
+        document.addEventListener("DOMContentLoaded", () => {
+        // Set initial quantity
+        if (quantityInput) {
+            quantityInput.value = 1
+        }
+
+        // Show welcome message
+        setTimeout(() => {
+            showNotification("Welcome to our product page!", "info")
+        }, 1000)
+        })
 
     </script>
 </body>
