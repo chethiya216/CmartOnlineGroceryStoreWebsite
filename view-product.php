@@ -1048,9 +1048,9 @@ body {
                           <span class="current-price">$<?php echo $fetch_product['price']; ?></span>
                       </div>
 
-                      <!-- <div class="product-description">
+                      <div class="product-description">
                           <p><?php echo $fetch_product['description']; ?></p>
-                      </div> -->
+                      </div>
 
                       <!-- Product Options -->
                       <div class="product-options">
