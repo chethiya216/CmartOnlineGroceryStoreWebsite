@@ -97,17 +97,17 @@ if (isset($_POST['add_to_cart'])) {
                                         ?>)</div>
                                 </div>
                                 <?php if ($fetch_products['qty'] > 0) { ?>
-                                    <input type="number" min="1" name="product_quantity" value="1" class="qty">
+                                    <!-- <input type="number" min="1" name="product_quantity" value="1" class="qty"> -->
                                 <?php } else { ?>
-                                    <input type="number" min="1" name="product_quantity" class="qty" value="0" hidden>
+                                    <!-- <input type="number" min="1" name="product_quantity" class="qty" value="0" hidden> -->
                                 <?php } ?>
                                 <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
                                 <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
                                 <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
                                 <?php if ($fetch_products['qty'] > 0) { ?>
-                                    <input type="submit" value="add to cart" name="add_to_cart" class="btn">
+                                    <!-- <input type="submit" value="add to cart" name="add_to_cart" class="btn"> -->
                                 <?php }else{ ?>
-                                    <input type="submit" value="Out Of Stock" class="btn" hidden disabled>
+                                    <!-- <input type="submit" value="Out Of Stock" class="btn" hidden disabled> -->
                                 <?php } ?>
                             </a>
                         </div>

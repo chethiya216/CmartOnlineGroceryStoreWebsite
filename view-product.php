@@ -30,6 +30,30 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
+// if (isset($_POST['buy_now'])) {
+
+//     if (!$user_id) {
+//         $_SESSION['redirect_message'] = 'Please login to proceed with the purchase';
+//         header('location:login.php');
+//         exit;
+//     }
+
+//     $product_id = $_POST['product_id'];
+//     $product_name = $_POST['product_name'];
+//     $product_price = $_POST['product_price'];
+//     $product_image = $_POST['product_image'];
+//     $product_quantity = $_POST['product_quantity'];
+
+//     $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE product_id = '$product_id' AND user_id = '$user_id'") or die('query failed');
+
+//     if (mysqli_num_rows($check_cart_numbers) > 0) {
+//         $message[] = 'Already added to cart!';
+//     } else {
+//         mysqli_query($conn, "INSERT INTO `cart`(user_id, product_id, name, price, quantity, image) VALUES('$user_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
+//         $message[] = 'Product added to cart!';
+//     }
+// }
+
 ?>
 
 <!DOCTYPE html>
@@ -1010,19 +1034,6 @@ body {
     }
     ?>
 
-    <!-- Breadcrumb -->
-    <!-- <div class="breadcrumb">
-        <div class="container">
-            <a href="#" class="breadcrumb-link">Home</a>
-            <i class="fas fa-chevron-right"></i>
-            <a href="#" class="breadcrumb-link">Electronics</a>
-            <i class="fas fa-chevron-right"></i>
-            <a href="#" class="breadcrumb-link">Audio</a>
-            <i class="fas fa-chevron-right"></i>
-            <span class="breadcrumb-current">Wireless Headphones</span>
-        </div> -->
-    </div>
-
     <!-- Main Product Section -->
     <main class="product-main">
         <div class="container">
@@ -1100,7 +1111,7 @@ body {
                               <i class="fas fa-shopping-cart"></i>
                               Add to Cart
                           </button>
-                          <button class="btn btn-secondary buy-now">
+                          <button class="btn btn-secondary buy-now" name="buy_now">
                               <i class="fas fa-bolt"></i>
                               Buy Now
                           </button>
