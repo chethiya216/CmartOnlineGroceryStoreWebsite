@@ -3,7 +3,8 @@ include("config.php");
 session_start();
 
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-$product_id = $_GET['id'] ?? null;
+// $product_id = $_GET['id'] ?? null;
+$product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if (isset($_POST['add_to_cart'])) {
 
@@ -994,7 +995,20 @@ body {
     </style>
 </head>
 <body>
-    <?php include 'header.php'; ?>
+  <?php 
+    include 'header.php'; 
+    
+    if(isset($messages)){
+        foreach($messages as $message){
+            echo '
+            <div class="message">
+                <span>'.$message.'</span>
+                <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+            </div>
+            ';
+        }
+    }
+    ?>
 
     <!-- Breadcrumb -->
     <!-- <div class="breadcrumb">
@@ -1023,6 +1037,7 @@ body {
                   <input type="hidden" name="product_id" value="<?php echo $fetch_product['id']; ?>">
                   <div class="product-images">
                       <div class="main-image">
+                          <input type="hidden" name="product_image" value="<?php echo $fetch_product['image']; ?>">
                           <img src="uploaded_img/<?php echo $fetch_product['image']; ?>" alt="<?php echo $fetch_product['name']; ?>" id="mainImage">
                       </div>
                       
@@ -1031,8 +1046,9 @@ body {
                   <!-- Product Details -->
                   <div class="product-details">
                       <div class="product-header">
+                          <input type="hidden" name="product_name" value="<?php echo $fetch_product['name']; ?>">
                           <h1 class="product-title"><?php echo $fetch_product['name']; ?></h1>
-                          <div class="product-rating">
+                          <!-- <div class="product-rating">
                               <div class="stars">
                                   <i class="fas fa-star"></i>
                                   <i class="fas fa-star"></i>
@@ -1041,17 +1057,17 @@ body {
                                   <i class="fas fa-star-half-alt"></i>
                               </div>
                               <span class="rating-text">(4.5) 2,847 reviews</span>
-                          </div>
+                          </div> -->
                       </div>
 
                       <div class="product-price">
-                          <span class="current-price">$<?php echo $fetch_product['price']; ?></span>
+                          <input type="hidden" name="product_price" value="<?php echo $fetch_product['price']; ?>">
+                          <div class="current-price">Rs: <?php echo $fetch_product['price']; ?>/-</div>
                       </div>
 
                       <div class="product-description">
                           <p><?php echo $fetch_product['description']; ?></p>
                       </div>
-
                       <!-- Product Options -->
                       <div class="product-options">
                           <!-- <div class="option-group">
@@ -1080,7 +1096,7 @@ body {
 
                       <!-- Action Buttons -->
                       <div class="product-actions">
-                          <button class="btn btn-primary add-to-cart" name="add-to-cart">
+                          <button class="btn btn-primary add-to-cart" name="add_to_cart">
                               <i class="fas fa-shopping-cart"></i>
                               Add to Cart
                           </button>
@@ -1095,7 +1111,7 @@ body {
             </div>
 
             <!-- Product Tabs -->
-            <div class="product-tabs">
+            <!-- <div class="product-tabs">
                 <div class="tab-navigation">
                     <button class="tab-btn" data-tab="reviews">Reviews (2,847)</button>
                 </div>
@@ -1173,7 +1189,7 @@ body {
                     </div>
 
                 </div>
-            </div>
+            </div> -->
             <?php
                     }
                 } else {

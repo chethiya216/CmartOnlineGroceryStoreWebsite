@@ -20,10 +20,10 @@ if (isset($_POST['add_product'])) {
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_folder = 'uploaded_img/' . $image;
 
-    $select_product = mysqli_query($conn, query: "SELECT * FROM `products`'") or die('query failed');
+    $select_product = mysqli_query($conn, query: "SELECT * FROM `products` WHERE name = '$name'") or die('query failed');
 
     if (mysqli_num_rows($select_product) > 0) {
-        $message[] = 'product name already added';
+        $message[] = 'Product name already added';
     } else {
         $add_product_query = mysqli_query($conn, "INSERT INTO `products`(name, price, image, qty, description) VALUES('$name', '$price', '$image','$quantity', '$description')") or die('query failed');
 
@@ -32,10 +32,10 @@ if (isset($_POST['add_product'])) {
             //     $message[] = 'image size is too large';
             // } else {
                 move_uploaded_file($image_tmp_name, $image_folder);
-                $message[] = 'product added successfully!';
+                $message[] = 'Product added successfully!';
             // }
         } else {
-            $message[] = 'product could not be added!';
+            $message[] = 'Product could not be added!';
         }
     }
 }
@@ -139,7 +139,7 @@ if (isset($_POST['update_product'])) {
                         <img src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                         <div class="name"><?php echo $fetch_products['name']; ?></div>
                         <div class="price">Rs:<?php echo $fetch_products['price']; ?>/-</div>
-                        <div class="quantity">Qty:<?php echo $fetch_products['qty']; ?>/-</div>
+                        <div class="quantity">Qty:<?php echo $fetch_products['qty']; ?></div>
                         <a href="admin_products.php?update=<?php echo $fetch_products['id']; ?>" class="option-btn">update</a>
                         <a href="admin_products.php?delete=<?php echo $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('delete this product?');">delete</a>
                     </div> -->
@@ -167,14 +167,13 @@ if (isset($_POST['update_product'])) {
                                 echo '<td style="padding: 10px; font-size: 2rem;">' . $fetch_products['qty'] . '</td>';
                                 echo '<td style="padding: 10px; font-size: 2rem;">' . $fetch_products['description'] . '</td>';
                                 echo '<td style="padding: 10px;">';
-                                echo '<a href="admin_products.php?update=' . $fetch_products['id'] . '" class="option-btn" style="background-color: #4CAF50; color: white; padding: 5px 20px; margin:5px; text-decoration: none;">update</a>';
-                                echo '<a href="admin_products.php?delete=' . $fetch_products['id'] . '" class="delete-btn" style="background-color: #f44336; color: white; padding: 5px 20px; text-decoration: none;" onclick="return confirm(\'delete this product?\')">delete</a>';
+                                echo '<a href="admin_products.php?update=' . $fetch_products['id'] . '" class="fa-solid fa-pen-to-square option-btn" style="background-color: #4CAF50; color: white; padding: 10px 10px; margin:5px; text-decoration: none;" title="Edit Product"></a>';
+                                echo '<a href="admin_products.php?delete=' . $fetch_products['id'] . '" class="fa-solid fa-trash-can delete-btn" style="background-color: #f44336; color: white; padding: 10px 10px; margin:5px; text-decoration: none;" onclick="return confirm(\'delete this product?\')" title="Delete Product"></a>';
                                 echo '</td>';
                                 echo '</tr>';
                             }
                             ?>
                         </tbody>
-
                     </table>
 
             <?php
