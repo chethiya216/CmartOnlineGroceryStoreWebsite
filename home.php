@@ -94,7 +94,8 @@ if (isset($_POST['add_to_cart'])) {
                                         } else {
                                             echo 'Out of stock';
                                         }
-                                        ?>)</div> -->
+                                        ?>)
+                                    </div> -->
                                 </div>
                                 <?php if ($fetch_products['qty'] > 0) { ?>
                                     <!-- <input type="number" min="1" name="product_quantity" value="1" class="qty"> -->
