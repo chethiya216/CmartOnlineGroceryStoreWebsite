@@ -68,6 +68,17 @@
    background-color: var(--green3);
 }
 
+input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+
 html{
    font-size: 62.5%;
    overflow-x: hidden;
@@ -1231,8 +1242,8 @@ section{
    font-size: 1.5rem;
    color: var(--light-color);
    /* padding: 1rem 0; */
-   margin-top: 2.5rem;
-   padding-top: 2.5rem;
+   /* margin-top: 2.5rem; */
+   padding-top: 1rem;
 }
 
 .footer .rights span{
