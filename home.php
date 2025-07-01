@@ -88,13 +88,13 @@ if (isset($_POST['add_to_cart'])) {
                                 <div class="name"><?php echo $fetch_products['name']; ?></div>
                                 <div class="price-qty">
                                     <div class="price">Rs:<?php echo $fetch_products['price']; ?>/-</div>
-                                    <div class="prod-qty">(<?php 
+                                    <!-- <div class="prod-qty">(<?php 
                                         if ($fetch_products['qty'] > 0) {
                                             echo $fetch_products['qty'] . ' left';
                                         } else {
                                             echo 'Out of stock';
                                         }
-                                        ?>)</div>
+                                        ?>)</div> -->
                                 </div>
                                 <?php if ($fetch_products['qty'] > 0) { ?>
                                     <!-- <input type="number" min="1" name="product_quantity" value="1" class="qty"> -->

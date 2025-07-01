@@ -88,7 +88,7 @@ if (isset($_POST['add_to_cart'])) {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: #fff;
@@ -105,8 +105,8 @@ body {
 
 .badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  /* top: -8px;
+  right: -8px; */
   background: var(--accent-color);
   color: white;
   border-radius: 50%;
@@ -160,7 +160,7 @@ body {
 .product-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 1.5rem;
   margin-bottom: 3rem;
 }
 
@@ -177,7 +177,12 @@ body {
   border-radius: 12px;
   overflow: hidden;
   aspect-ratio: 1;
+  max-width: 300px;
+  align-items: center;
+  justify-content: end
 }
+
+
 
 .main-image img {
   width: 100%;
@@ -210,10 +215,19 @@ body {
 
 .badge-new {
   background: var(--success-color);
+  position: relative;
+  padding: 1rem;
+  width: fit-content;
+  font-size: 12px;
 }
 
 .badge-sale {
   background: var(--accent-color);
+  position: relative;
+  padding: 1rem;
+  width: fit-content;
+  font-size: 12px;
+
 }
 
 .zoom-icon {
@@ -268,13 +282,44 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  background-color: #ddd;
+  padding: 2rem;
+  border-radius: 1rem;
 }
 
-.product-title {
+/* .product-title {
   font-size: 2rem;
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 0.5rem;
+} */
+
+.product-header {
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-title {
+    font-size: 2rem; /* Equivalent to h1 size */
+    font-weight: bold;
+    margin: 0; /* Remove default h1 margin */
+}
+
+.availability-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    justify-content: center
+}
+
+.availability-group p {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 0; /* Remove default p margin */
 }
 
 .product-rating {
@@ -302,8 +347,8 @@ body {
 }
 
 .current-price {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 3rem;
+  font-weight: 600;
   color: var(--accent-color);
 }
 
@@ -323,15 +368,27 @@ body {
 }
 
 .product-description {
-  color: var(--dark-gray);
-  line-height: 1.7;
+  font-size: 1.5rem;
+  margin: 1rem 0;
 }
 
 /* Product Options */
 .product-options {
   display: flex;
-  flex-direction: column;
   gap: 1.5rem;
+  align-items: center
+}
+
+.product-options p{
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.product-options .qty{
+  padding: .7rem;
+  width: 40px;
+  border-radius: 3px;
 }
 
 .option-group {
@@ -427,7 +484,41 @@ body {
 .product-actions {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
+}
+
+.add-to-cart{
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  width: fit-content;
+  background-color: #27ae60;
+  color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.add-to-cart:hover{
+  background-color:rgb(23, 141, 72);
+}
+
+.buy-now{
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  width: fit-content;
+  background-color:rgb(28, 58, 40);
+  color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  cursor: pointer;
+}
+
+.buy-now:hover{
+  background-color:rgb(23, 141, 72);
 }
 
 .btn {
@@ -906,19 +997,8 @@ body {
   font-size: 1.2rem;
 }
 
-.product-info .original-price {
-  font-size: 1rem;
-}
 
-.payment-methods {
-  display: flex;
-  gap: 1rem;
-  font-size: 1.5rem;
-}
 
-.payment-methods i {
-  color: #bdc3c7;
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -933,6 +1013,12 @@ body {
   .product-container {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .product-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   .product-title {
@@ -1042,84 +1128,64 @@ body {
                 if (mysqli_num_rows($select_product) > 0) {
                     while ($fetch_product = mysqli_fetch_assoc($select_product)) {
             ?>
-            <div class="product-container">
-                <!-- Product Images -->
-              <form action="" method="post">
-                  <input type="hidden" name="product_id" value="<?php echo $fetch_product['id']; ?>">
+              <div class="product-container">
+                  <!-- Product Images -->
                   <div class="product-images">
                       <div class="main-image">
-                          <input type="hidden" name="product_image" value="<?php echo $fetch_product['image']; ?>">
                           <img src="uploaded_img/<?php echo $fetch_product['image']; ?>" alt="<?php echo $fetch_product['name']; ?>" id="mainImage">
                       </div>
-                      
                   </div>
 
                   <!-- Product Details -->
                   <div class="product-details">
-                      <div class="product-header">
+                      <form action="" method="post">
+                          <input type="hidden" name="product_id" value="<?php echo $fetch_product['id']; ?>">
+                          <input type="hidden" name="product_image" value="<?php echo $fetch_product['image']; ?>">
                           <input type="hidden" name="product_name" value="<?php echo $fetch_product['name']; ?>">
-                          <h1 class="product-title"><?php echo $fetch_product['name']; ?></h1>
-                          <!-- <div class="product-rating">
-                              <div class="stars">
-                                  <i class="fas fa-star"></i>
-                                  <i class="fas fa-star"></i>
-                                  <i class="fas fa-star"></i>
-                                  <i class="fas fa-star"></i>
-                                  <i class="fas fa-star-half-alt"></i>
-                              </div>
-                              <span class="rating-text">(4.5) 2,847 reviews</span>
-                          </div> -->
-                      </div>
-
-                      <div class="product-price">
                           <input type="hidden" name="product_price" value="<?php echo $fetch_product['price']; ?>">
-                          <div class="current-price">Rs: <?php echo $fetch_product['price']; ?>/-</div>
-                      </div>
 
-                      <div class="product-description">
-                          <p><?php echo $fetch_product['description']; ?></p>
-                      </div>
-                      <!-- Product Options -->
-                      <div class="product-options">
-                          <!-- <div class="option-group">
-                              <label class="option-label">Variation:</label>
-                              <div class="size-options">
-                                  <div class="size-option active">Small</div>
-                                  <div class="size-option">Medium</div>
-                                  <div class="size-option">Large</div>
-                              </div>
-                          </div> -->
+                          <div class="product-header">
+                            <h1 class="product-title"><?php echo $fetch_product['name']; ?></h1>
+                            <div class="availability-group">
+                                <p>Availability :</p>
+                                <?php if ($fetch_product['qty'] > 0) { ?>
+                                    <span class="badge badge-new">In Stock</span>
+                                <?php } else { ?>
+                                    <span class="badge badge-sale">Out of Stock</span>
+                                <?php } ?>
+                            </div>
+                          </div>
+                          
+                          <div class="product-price">
+                              <div class="current-price">LKR <?php echo $fetch_product['price']; ?></div>
+                          </div>
 
-                          <!-- <div class="option-group">
-                              <label class="option-label">Quantity:</label>
-                              <div class="quantity-selector">
-                                  <button class="quantity-btn minus">-</button>
-                                  <input type="number" class="quantity-input" value="1" min="1" max="10">
-                                  <button class="quantity-btn plus">+</button>
-                              </div>
-                          </div> -->
-                          <?php if ($fetch_product['qty'] > 0) { ?>
-                              <input type="number" min="1" name="product_quantity" value="1" class="qty">
-                          <?php } else { ?>
-                              <input type="number" min="1" name="product_quantity" class="qty" value="0" hidden>
-                          <?php } ?>
-                      </div>
+                          <div class="product-description">
+                              <p><?php echo $fetch_product['description']; ?></p>
+                          </div>
 
-                      <!-- Action Buttons -->
-                      <div class="product-actions">
-                          <button class="btn btn-primary add-to-cart" name="add_to_cart">
-                              <i class="fas fa-shopping-cart"></i>
-                              Add to Cart
-                          </button>
-                          <button class="btn btn-secondary buy-now" name="buy_now">
-                              <i class="fas fa-bolt"></i>
-                              Buy Now
-                          </button>
-                      </div>
+                          <div class="product-options">
+                              <p class="quantity-label">Quantity :</p>
+                              <?php if ($fetch_product['qty'] > 0) { ?>
+                                  <input type="number" min="1" name="product_quantity" value="1" class="qty">
+                              <?php } else { ?>
+                                  <input type="number" min="1" name="product_quantity" class="qty" value="0" hidden>
+                              <?php } ?>
+                          </div>
 
+                          <div class="product-actions">
+                              <button class="add-to-cart" name="add_to_cart">
+                                  <i class="fas fa-shopping-cart"></i>
+                                  Add to Cart
+                              </button>
+                              <button class="buy-now" name="buy_now">
+                                  <i class="fas fa-bolt"></i>
+                                  Buy Now
+                              </button>
+                          </div>
+                      </form>
                   </div>
-              </form>
-            </div>
+              </div>
 
             <!-- Product Tabs -->
             <!-- <div class="product-tabs">

@@ -18,5 +18,5 @@
             <p> <i class="fas fa-map-marker-alt"></i> Majuwana road, Gonapinuwala </p>
         </div>
     </div>
-    <p class="rights">All rights reserved @Chethiya Lakshan</p>
+    <p class="rights">@All rights reserved <b> ©Chethiya Lakshan</b></p>
 </section>
