@@ -30,53 +30,124 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>register</title>
-
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!--   css file link  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Register | CMart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
-
-</head>
-
-<body background="images/background.png">
-
-
-
-    <?php
-    if (isset($message)) {
-        foreach ($message as $message) {
-            echo '
-      <div class="message">
-         <span>' . $message . '</span>
-         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-      </div>
-      ';
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: larger;
+            font-family: 'Roboto', sans-serif;
         }
-    }
-    ?>
+        
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <p class="header-title"><i class="fas fa-shopping-cart"></i>CMart</p>
+            <h2>Create Admin Account</h2>
+            <p>Join us today to manage the store!</p>
+        </div>
 
-    <div class="form-container">
+        <?php if (isset($message)): ?>
+            <div class="alert"><?= htmlspecialchars($message[0]) ?><i class="fas fa-times" onclick="this.parentElement.remove();"></i></div>
+        <?php endif; ?>
 
-        <form action="" method="post">
-            <h3>admin register</h3>
-            <input type="text" name="name" placeholder="enter your name" required class="box">
-            <input type="email" name="email" placeholder="enter your email" required class="box">
-            <input type="password" name="password" placeholder="enter your password" required class="box">
-            <input type="password" name="cpassword" placeholder="confirm your password" required class="box">
-
-            <input type="submit" name="submit" value="register now" class="btn">
-            <p>already have an account? <a href="admin_login.php">login now</a></p>
+        <form action="" method="post" id="registerForm">
+            <div class="form-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" name="name" id="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" name="email" id="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="password" id="password" placeholder="Create a password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="cpassword" id="cpassword" placeholder="Confirm your password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('cpassword', this)"></i>
+            </div>
+            <div class="register-button-wrapper">
+                <button type="submit" name="submit" class="login-btn">Create Account</button>
+            </div>
         </form>
 
+        <div class="divider"><span>or</span></div>
+
+        <div class="register-link">
+            Already have an admin account? <a href="admin_login.php">Sign In</a>
+        </div>
     </div>
 
-</body>
+    <script>
+        document.querySelectorAll('.form-group input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
 
+        document.getElementById('cpassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#ff6b6b';
+            } else {
+                this.style.borderColor = '#e1e8ed';
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const cpassword = document.getElementById('cpassword').value;
+
+            if (!name || !email || !password || !cpassword) {
+                e.preventDefault();
+                showMessage('Please fill in all required fields');
+                return false;
+            }
+
+            if (!isValidEmail(email)) {
+                e.preventDefault();
+                showMessage('Please enter a valid email address');
+                return false;
+            }
+
+            if (password !== cpassword) {
+                e.preventDefault();
+                showMessage('Confirm password does not match');
+                return false;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => alert.remove());
+            }, 5000);
+        });
+    </script>
+    <script src="js/admin_script.js"></script>
+</body>
 </html>

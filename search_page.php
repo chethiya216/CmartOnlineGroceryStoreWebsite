@@ -71,18 +71,50 @@ if (isset($_POST['add_to_cart'])) {
                 $search_item = $_POST['search'];
                 $select_products = mysqli_query($conn, "SELECT * FROM `products` WHERE name LIKE '%{$search_item}%'") or die('query failed');
                 if (mysqli_num_rows($select_products) > 0) {
-                    while ($fetch_product = mysqli_fetch_assoc($select_products)) {
+                    while ($fetch_products = mysqli_fetch_assoc($select_products)) {
             ?>
-                    <form action="" method="post" class="box">
+                    <!-- <form action="" method="post" class="box">
                         <img src="uploaded_img/<?php echo $fetch_product['image']; ?>" alt="" class="image">
                         <div class="name"><?php echo $fetch_product['name']; ?></div>
-                        <div class="price">$<?php echo $fetch_product['price']; ?>/-</div>
+                        <div class="price-qty">
+                                <div class="price">Rs:<?php echo $fetch_product['price']; ?>/-</div>
+                                <div class="prod-qty">(<?php echo $fetch_product['qty']; ?> left)</div>
+                        </div>
                         <input type="number" class="qty" name="product_quantity" min="1" value="1">
                         <input type="hidden" name="product_name" value="<?php echo $fetch_product['name']; ?>">
                         <input type="hidden" name="product_price" value="<?php echo $fetch_product['price']; ?>">
                         <input type="hidden" name="product_image" value="<?php echo $fetch_product['image']; ?>">
                         <input type="submit" class="btn" value="add to cart" name="add_to_cart">
-                    </form>
+                    </form> -->
+
+                    <form action="" method="post" class="box">
+                    <div class="product-wrapper">
+                        <a href="view-product.php?id=<?php echo $fetch_products['id']; ?>">
+                            <input type="hidden" name="product_id" value="<?php echo $fetch_products['id']; ?>">
+                            <img class="image" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
+                            <div class="name"><?php echo $fetch_products['name']; ?></div>
+                            <div class="price-qty">
+                                <div class="price">Rs:<?php echo $fetch_products['price']; ?>/-</div>
+                                <!-- <div class="prod-qty">(<?php 
+                                    if ($fetch_products['qty'] > 0) {
+                                        echo $fetch_products['qty'] . ' left';
+                                    } else {
+                                        echo 'Out of stock';
+                                    }
+                                    ?>)</div> -->
+                            </div>
+                             
+                            <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
+                            <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
+                            <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
+                            <?php if ($fetch_products['qty'] > 0) { ?>
+                                <!-- <input type="submit" value="add to cart" name="add_to_cart" class="btn"> -->
+                            <?php }else{ ?>
+                                <!-- <input type="submit" value="Out Of Stock" class="btn" hidden disabled> -->
+                            <?php } ?>
+                        </a>
+                    </div>
+                </form> 
             <?php
                     }
                 } else {

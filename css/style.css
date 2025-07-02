@@ -68,6 +68,17 @@
    background-color: var(--green3);
 }
 
+input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+
 html{
    font-size: 62.5%;
    overflow-x: hidden;
@@ -529,17 +540,25 @@ section{
    gap: 1.5rem;
    justify-content: center;
    background: var(--white);
+
+}
+
+.price-qty {
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .products .box-container .box {
    border-radius: 1rem;
-   padding: 3rem 0 3rem 0;
+   padding: 3rem 2rem ;
    text-align: center;
    background-color: #f9f9f9;
    border: 1px solid #eee;
    position: relative;
    transition: all 0.3s ease;
    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+   max-width: 300px;
 }
 
 .products .box-container .box:hover {
@@ -568,23 +587,32 @@ section{
    font-size: 2.4rem;
    color: var(--green1);
    font-weight: 700;
-   /* margin: 1rem 0; */
+   padding-right: 1rem;
+   /* margin-right: 1rem 0; */
 }
 
 .products .box-container .box .qty {
-   width: 60%;
+   width: 20%;
    padding: 1rem;
    border-radius: .5rem;
    border: 1px solid #ddd;
-   margin: 1rem 0;
+   margin: 1rem 1rem 0;
    font-size: 1.8rem;
    text-align: center;
+}
+
+.products .box-container .box .prod-qty {
+   font-size: 1.6rem;
+   color: var(--light-color);
+   margin-top: 0.5rem;
+   display: block;
+   padding-right: 1rem;
 }
 
 .products .box-container .box .btn {
    display: inline-block;
    margin-top: 1rem;
-   padding: 1.2rem 3rem;
+   padding: 1rem 3rem;
    cursor: pointer;
    color: var(--white);
    font-size: 1.8rem;
@@ -1214,8 +1242,8 @@ section{
    font-size: 1.5rem;
    color: var(--light-color);
    /* padding: 1rem 0; */
-   margin-top: 2.5rem;
-   padding-top: 2.5rem;
+   /* margin-top: 2.5rem; */
+   padding-top: 1rem;
 }
 
 .footer .rights span{
