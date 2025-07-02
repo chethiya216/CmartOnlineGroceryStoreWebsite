@@ -33,51 +33,113 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!--   css file link  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Login | CMart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
-
-
-
-</head>
-
-<body background="images/background.png">
-
-    <?php
-    if (isset($message)) {
-        foreach ($message as $message) {
-            echo '
-      <div class="message">
-         <span>' . $message . '</span>
-         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-      </div>
-      ';
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: larger;
+            font-family: 'Roboto', sans-serif;
         }
-    }
-    ?>
+        
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <p class="header-title"><i class="fas fa-shopping-cart"></i>CMart</p>
+            <h2>Admin Sign In</h2>
+            <p>Welcome back! Please log in to manage the store.</p>
+        </div>
 
-    <div class="form-container">
+        <?php if (isset($message)): ?>
+            <div class="alert"><?= htmlspecialchars($message[0]) ?><i class="fas fa-times" onclick="this.parentElement.remove();"></i></div>
+        <?php endif; ?>
 
-        <form action="" method="post">
-            <h3>Admin login</h3>
-            <input type="email" name="email" placeholder="enter your email" required class="box">
-            <input type="password" name="password" placeholder="enter your password" required class="box">
-            <input type="submit" name="submit" value="login now" class="btn">
-            <a href="admin_page.php" class="btn">back to home</a>
-            
+        <form action="" method="post" id="loginForm">
+            <div class="form-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
+            </div>
+            <div class="button-wrapper">
+                <button type="submit" name="submit" class="login-btn">Sign In</button>
+            </div>
         </form>
 
+        <div class="divider"><span>or</span></div>
+
+        <div class="register-link">
+            Don't have an admin account? <a href="admin_register.php">Create Account</a>
+        </div>
     </div>
 
-</body>
+    <script>
+        function togglePassword(id, element) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') {
+                input.type = 'text';
+                element.classList.remove('fa-eye');
+                element.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                element.classList.remove('fa-eye-slash');
+                element.classList.add('fa-eye');
+            }
+        }
 
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                e.preventDefault();
+                showMessage('Please fill in all required fields');
+                return false;
+            }
+
+            if (!isValidEmail(email)) {
+                e.preventDefault();
+                showMessage('Please enter a valid email address');
+                return false;
+            }
+        });
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showMessage(message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert';
+            alertDiv.innerHTML = `${message}<i class="fas fa-times" onclick="this.parentElement.remove();"></i>`;
+            document.querySelector('.login-container').insertBefore(alertDiv, document.querySelector('form'));
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => alert.remove());
+            }, 5000);
+        });
+    </script>
+</body>
 </html>
