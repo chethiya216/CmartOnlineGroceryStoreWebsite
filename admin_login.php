@@ -78,6 +78,9 @@ if (isset($_POST['submit'])) {
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
                 <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
             </div>
+            <div class="forgot-password">
+                <a href="admin-password-reset.php">Forgot Password?</a>
+            </div>
             <div class="button-wrapper">
                 <button type="submit" name="submit" class="login-btn">Sign In</button>
             </div>

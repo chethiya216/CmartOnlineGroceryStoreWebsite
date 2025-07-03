@@ -25,7 +25,7 @@ if (isset($_GET['delete'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>users</title>
+    <title>Users | CMart</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -135,59 +135,56 @@ if (isset($_GET['delete'])) {
                     <?php } ?>
                 </table> -->
 
-                <div class="container">
-
-        <div class="table-container">
-            
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>User Type</th>
-                        <th style="text-align: center;">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $fetch_users = mysqli_query($conn, "SELECT * FROM users") or die('query failed');
-                    while ($user = mysqli_fetch_assoc($fetch_users)) {
-                    ?>
-                        <tr>
-                            <td>
-                                <div class="user-id"><?php echo $user['id']; ?></div>
-                            </td>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-name"><?php echo $user['name']; ?></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="user-email">
-                                    <?php echo $user['email']; ?></div>
-                            </td>
-                            <td>
-                                <span class="user-type <?php echo $user['user_type']; ?>">
-                                    <i class="fas fa-<?php echo $user['user_type'] == 'admin' ? 'shield-alt' : 'user'; ?>"></i>
-                                    <?php echo $user['user_type']; ?>
-                                </span>
-                            </td>
-                            <td style="text-align: center;">
-                                <a href="admin_users.php?delete=<?php echo $user['id']; ?>" 
-                                   onclick="return confirm('Are you sure you want to delete this user?');" 
-                                   class="user-delete-btn">
-                                    <i class="fas fa-trash"></i>
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <div class="container">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>User Type</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $fetch_users = mysqli_query($conn, "SELECT * FROM users") or die('query failed');
+                            while ($user = mysqli_fetch_assoc($fetch_users)) {
+                            ?>
+                                <tr>
+                                    <td>
+                                        <div class="user-id"><?php echo $user['id']; ?></div>
+                                    </td>
+                                    <td>
+                                        <div class="user-info">
+                                            <div class="user-name"><?php echo $user['name']; ?></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="user-email">
+                                            <?php echo $user['email']; ?></div>
+                                    </td>
+                                    <td>
+                                        <span class="user-type <?php echo $user['user_type']; ?>">
+                                            <i class="fas fa-<?php echo $user['user_type'] == 'admin' ? 'shield-alt' : 'user'; ?>"></i>
+                                            <?php echo $user['user_type']; ?>
+                                        </span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <a href="admin_users.php?delete=<?php echo $user['id']; ?>" 
+                                        onclick="return confirm('Are you sure you want to delete this user?');" 
+                                        class="user-delete-btn">
+                                            <i class="fas fa-trash"></i>
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <?php
             // };
             ?>
