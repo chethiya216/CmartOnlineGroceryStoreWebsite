@@ -120,10 +120,10 @@ if (!isset($admin_id)) {
 
             <div class="box">
                 <?php
-                $select_messages = mysqli_query($conn, "SELECT * FROM `message`") or die('query failed');
+                $select_messages = mysqli_query($conn, "SELECT * FROM `message` WHERE date_time > NOW() - INTERVAL 1 DAY") or die('query failed');
                 $number_of_messages = mysqli_num_rows($select_messages);
                 ?>
-                <p>Messages</p>
+                <p>Recent messages</p>
                 <h3><?php echo $number_of_messages; ?></h3>
             </div>
 

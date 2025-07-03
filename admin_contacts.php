@@ -65,7 +65,7 @@
             <?php
                 }
             } else {
-                echo '<p class="empty" style="border:transparent;">you have no messages!</p>';
+                echo '<p class="empty" style="border:transparent;">You have no messages!</p>';
             }
             ?>
         </div>
