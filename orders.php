@@ -25,8 +25,24 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     <!-- font awesome cdn -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <!--css file-->
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .status-pending { color: #ef4444; }
+        .status-completed { color: #10b981; }
+        .table-container { max-width: 100%; overflow-x: auto; }
+        table { border-collapse: separate; border-spacing: 0; }
+        th, td { border: 1px solid #d1d5db; } /* Tailwind's gray-300 */
+        thead th { border-bottom: 2px solid #9ca3af; } /* Tailwind's gray-400 for header */
+        tbody tr:last-child td { border-bottom: 1px solid #d1d5db; } /* Ensure last row has bottom border */
+        @media (max-width: 640px) {
+            th, td { font-size: 0.75rem; padding: 0.5rem; }
+        }
+    </style>
 
 </head>
 
@@ -34,87 +50,59 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
     <?php include 'header.php'; ?>
 
-    <div class="heading">
-        <h3>your picks</h3>
-        <p> <a href="home.php">home</a> / orders </p>
-    </div>
-
-    <section class="placed-orders">
-
-        <h1 class="title">placed orders</h1>
-
-        <div class="box-container">
-
-            <?php
-            $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE user_id = '$user_id'") or die('query failed');
-            if (mysqli_num_rows($order_query) > 0) {
-                while ($fetch_orders = mysqli_fetch_assoc($order_query)) {
-            ?>
-                    <div class="box">
-                        <p> placed on : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
-                        <p> name : <span><?php echo $fetch_orders['name']; ?></span> </p>
-                        <p> number : <span><?php echo $fetch_orders['number']; ?></span> </p>
-                        <p> email : <span><?php echo $fetch_orders['email']; ?></span> </p>
-                        <p> payment method : <span><?php echo $fetch_orders['method']; ?></span> </p>
-                        <p> items : <span><?php echo $fetch_orders['total_products']; ?></span> </p>
-                        <p> total price : <span>Rs:<?php echo $fetch_orders['total_price']; ?>/-</span> </p>
-                        <p> order status : <span style="color:<?php if ($fetch_orders['payment_status'] == 'pending') {
-                                                                    echo 'red';
-                                                                } else {
-                                                                    echo 'green';
-                                                                } ?>;"><?php echo $fetch_orders['payment_status']; ?></span> </p>
-                    </div>
-
-                    <!-- <table  style="width:100%; border-collapse: collapse; font-size:2rem; justify-content:space between;">
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">placed on:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span><?php echo $fetch_orders['placed_on']; ?></span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">name:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span><?php echo $fetch_orders['name']; ?></span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">number:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span><?php echo $fetch_orders['number']; ?></span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">email:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span><?php echo $fetch_orders['email']; ?></span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">payment method:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span><?php echo $fetch_orders['method']; ?></span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">items:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span><?php echo $fetch_orders['total_products']; ?></span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">total price:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span>Rs:<?php echo $fetch_orders['total_price']; ?>/-</span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 12px 15px; text-align: left;">payment status:</td>
-                            <td style="padding: 12px 15px; text-align: left;"><span style="color:<?php if ($fetch_orders['payment_status'] == 'pending') {
-                                                                                                        echo 'red';
-                                                                                                    } else {
-                                                                                                        echo 'green';
-                                                                                                    } ?>;"><?php echo $fetch_orders['payment_status']; ?></span></td>
-                        </tr>
-                    </table> -->
-
-                
-            <?php
-                    
-            }
-            } else {
-                echo '<p class="empty">no orders placed yet!</p>';
-            }
-            ?>
+    <div class="w-full">
+        <div class="heading">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Your Orders</h3>
+            <p> <a href="home.php">Home</a> / Orders </p>
         </div>
 
-    </section>
+        <section class="placed-orders">
+            <div class="table-container bg-white shadow-md rounded-lg">
+                <?php
+                $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE user_id = '$user_id'") or die('query failed');
+                if (mysqli_num_rows($order_query) > 0) {
+                ?>
+                    <table role="grid" aria-labelledby="orders-table" class="w-full px-8 py-6 ">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-700 text-2xl">
+                                <th class="py-3 px-4 text-left">Placed On</th>
+                                <th class="py-3 px-4 text-left">Name</th>
+                                <th class="py-3 px-4 text-left">Phone Number</th>
+                                <th class="py-3 px-4 text-left">Email</th>
+                                <th class="py-3 px-4 text-left">Payment Method</th>
+                                <th class="py-3 px-4 text-left">Items</th>
+                                <th class="py-3 px-4 text-left">Total Price</th>
+                                <th class="py-3 px-4 text-left">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($fetch_orders = mysqli_fetch_assoc($order_query)) { ?>
+                                <tr class="hover:bg-gray-50 text-2xl text-green-800">
+                                    <td class="py-3 px-4"><?php echo htmlspecialchars($fetch_orders['placed_on']); ?></td>
+                                    <td class="py-3 px-4"><?php echo htmlspecialchars($fetch_orders['name']); ?></td>
+                                    <td class="py-3 px-4"><?php echo htmlspecialchars($fetch_orders['number']); ?></td>
+                                    <td class="py-3 px-4"><?php echo htmlspecialchars($fetch_orders['email']); ?></td>
+                                    <td class="py-3 px-4"><?php echo htmlspecialchars($fetch_orders['method']); ?></td>
+                                    <td class="py-3 px-4"><?php echo htmlspecialchars($fetch_orders['total_products']); ?></td>
+                                    <td class="py-3 px-4">Rs: <?php echo htmlspecialchars($fetch_orders['total_price']); ?>/-</td>
+                                    <td class="py-3 px-4">
+                                        <span class="<?php echo $fetch_orders['payment_status'] == 'pending' ? 'status-pending' : 'status-completed'; ?>">
+                                            <?php echo htmlspecialchars($fetch_orders['payment_status']); ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                <?php
+                } else {
+                    echo '<p class="text-center text-gray-600 py-6 border border-gray-300 rounded-lg text-3xl">No orders placed yet!</p>';
+                }
+                // $stmt->close();
+                ?>
+            </div>
+        </section>
+    </div>
 
     <?php include 'footer.php'; ?>
 
