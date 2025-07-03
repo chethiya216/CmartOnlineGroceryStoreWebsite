@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
                 <i class="fas fa-shopping-cart"></i>
                 CMart
             </p>
-            <p>Create Your Account</p>
+            <h2>Create Your Account</>
             <p>Join us today and start shopping!</p>
         </div>
         <?php if (isset($message)): ?>

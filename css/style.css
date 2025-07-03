@@ -1360,8 +1360,12 @@ section{
    font-size: 1.4rem;
 }
 
+.login-header p{
+   margin-top: 1rem;
+}
+
 .login-btn {
-   width: 100px;
+   width: fit-content;
    padding: 12px;
    background-color: var(--button);
    border: none;
@@ -1418,6 +1422,22 @@ section{
    color: var(--black);
    margin-top: 0.5rem;
    font-weight: 700;
+}
+
+.forgot-password {
+   text-align: right;
+}
+
+.forgot-password a{
+   font-size: 1.4rem;
+   margin-top: 1rem;
+   color: var(--button);
+   fon
+}
+
+.forgot-password a:hover{
+   color: var(--button-hover);
+
 }
 
 /*! Register page--------  */

@@ -160,13 +160,13 @@ if (isset($_POST['update_product'])) {
                         <tbody>
                             <?php
                             while ($fetch_products = mysqli_fetch_assoc($select_products)) {
-                                echo "<tr class='box' style='background-color: #f2f2f2; border-bottom: 1px solid #ccc;'>";
-                                echo '<td style="width: 100px; font-size: 2rem; padding: 10px;"><img src="uploaded_img/' . $fetch_products['image'] . '" alt=""></td>';
+                                echo "<tr class='box' style='background-color: #f2f2f2; border-bottom: 1px solid #ccc; text-align: left;'>";
+                                echo '<td style="width: 100px; font-size: 2rem; padding: 10px; text-align: center;"><img src="uploaded_img/' . $fetch_products['image'] . '" alt=""></td>';
                                 echo '<td style="padding: 10px; font-size: 2rem;">' . $fetch_products['name'] . '</td>';
-                                echo '<td style="padding: 10px; font-size: 2rem;">Rs:' . $fetch_products['price'] . '/-</td>';
+                                echo '<td style="padding: 10px; font-size: 2rem;">Rs: ' . $fetch_products['price'] . '/-</td>';
                                 echo '<td style="padding: 10px; font-size: 2rem;">' . $fetch_products['qty'] . '</td>';
                                 echo '<td style="padding: 10px; font-size: 2rem;">' . $fetch_products['description'] . '</td>';
-                                echo '<td style="padding: 10px;">';
+                                echo '<td style="padding: 10px; text-align: center;">';
                                 echo '<a href="admin_products.php?update=' . $fetch_products['id'] . '" class="fa-solid fa-pen-to-square option-btn" style="background-color: #4CAF50; color: white; padding: 10px 10px; margin:5px; text-decoration: none;" title="Edit Product"></a>';
                                 echo '<a href="admin_products.php?delete=' . $fetch_products['id'] . '" class="fa-solid fa-trash-can delete-btn" style="background-color: #f44336; color: white; padding: 10px 10px; margin:5px; text-decoration: none;" onclick="return confirm(\'delete this product?\')" title="Delete Product"></a>';
                                 echo '</td>';
