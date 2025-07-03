@@ -48,7 +48,6 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-
         body {
             margin: 0;
             padding: 0;
@@ -61,6 +60,9 @@ if (isset($_POST['submit'])) {
             font-size: larger;
         }
 
+        .login-btn{
+            width: 100px
+        }
     </style>
 </head>
 
@@ -69,7 +71,7 @@ if (isset($_POST['submit'])) {
     <div class="login-container">
         <div class="login-header">
             <p class="header-title"><i class="fas fa-shopping-cart"></i>CMart</p>
-            <p>Welcome back! Please Sign In</p>
+            <h2>Welcome back! Please Sign In</h2>
         </div>
 
         <?php if (isset($message)): ?>
@@ -85,6 +87,9 @@ if (isset($_POST['submit'])) {
                 <i class="fas fa-lock input-icon"></i>
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
                 <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+            </div>
+            <div class="forgot-password">
+                <a href="password-reset.php">Forgot Password?</a>
             </div>
             <div class="button-wrapper">
                 <button type="submit" name="submit" class="login-btn">Sign In</button>
