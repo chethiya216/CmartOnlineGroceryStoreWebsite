@@ -33,11 +33,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>messages</title>
+    <title>Messages | CMart</title>
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- admin css file link  -->
     <link rel="stylesheet" href="css/admin_style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -54,7 +55,7 @@
                         <form action="" method="POST">
                             <input type="hidden" name="message_id" value="<?php echo $fetch_message['id']; ?>">
                             <p><?php echo '"' . $fetch_message['message'] . '"'; ?></p>
-                            <p>name : <span><?php echo $fetch_message['name']; ?></span> </p>
+                            <p>Name : <span><?php echo $fetch_message['name']; ?></span> </p>
                             <input type="submit" name="submit" value="add as review" class="delete-btn" style="margin-left: 7rem; margin-bottom:10px; background:green;">
                             <a href=" admin_contacts.php?delete=<?php echo $fetch_message['id']; ?>" onclick="return confirm('delete this message?');" class="delete-btn" style="margin-left: 6.5rem;">delete message</a>
                         </form>
