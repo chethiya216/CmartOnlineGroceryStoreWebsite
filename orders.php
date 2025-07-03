@@ -56,13 +56,13 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             <p> <a href="home.php">Home</a> / Orders </p>
         </div>
 
-        <section class="placed-orders ">
+        <section class="placed-orders">
             <div class="table-container bg-white shadow-md rounded-lg">
                 <?php
                 $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE user_id = '$user_id'") or die('query failed');
                 if (mysqli_num_rows($order_query) > 0) {
                 ?>
-                    <table role="grid" aria-labelledby="orders-table" class="w-full">
+                    <table role="grid" aria-labelledby="orders-table" class="w-full px-8 py-6 ">
                         <thead>
                             <tr class="bg-gray-200 text-gray-700 text-2xl">
                                 <th class="py-3 px-4 text-left">Placed On</th>
@@ -96,7 +96,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                     </table>
                 <?php
                 } else {
-                    echo '<p class="text-center text-gray-600 py-6 border border-gray-300 rounded-lg">No orders placed yet!</p>';
+                    echo '<p class="text-center text-gray-600 py-6 border border-gray-300 rounded-lg text-3xl">No orders placed yet!</p>';
                 }
                 // $stmt->close();
                 ?>
