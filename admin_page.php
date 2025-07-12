@@ -19,7 +19,7 @@ if (!isset($admin_id)) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>admin panel</title>
+    <title>Admin Home | CMart</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -52,7 +52,7 @@ if (!isset($admin_id)) {
                     };
                 };
                 ?>
-                <p>total pendings</p>
+                <p>Total pendings</p>
                 <h3>$<?php echo $total_pendings; ?>/-</h3>
 
             </div>
@@ -68,7 +68,7 @@ if (!isset($admin_id)) {
                     };
                 };
                 ?>
-                <p>completed payments</p>
+                <p>Completed payments</p>
                 <h3>$<?php echo $total_completed; ?>/-</h3>
 
             </div>
@@ -78,7 +78,7 @@ if (!isset($admin_id)) {
                 $select_orders = mysqli_query($conn, "SELECT * FROM `orders`") or die('query failed');
                 $number_of_orders = mysqli_num_rows($select_orders);
                 ?>
-                <p>orders placed</p>
+                <p>Orders placed</p>
                 <h3><?php echo $number_of_orders; ?></h3>
             </div>
 
@@ -87,7 +87,7 @@ if (!isset($admin_id)) {
                 $select_products = mysqli_query($conn, "SELECT * FROM `products`") or die('query failed');
                 $number_of_products = mysqli_num_rows($select_products);
                 ?>
-                <p>products added</p>
+                <p>Products added</p>
                 <h3><?php echo $number_of_products; ?></h3>
             </div>
 
@@ -96,7 +96,7 @@ if (!isset($admin_id)) {
                 $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE user_type = 'user'") or die('query failed');
                 $number_of_users = mysqli_num_rows($select_users);
                 ?>
-                <p>users</p>
+                <p>Users</p>
                 <h3><?php echo $number_of_users; ?></h3>
             </div>
 
@@ -105,7 +105,7 @@ if (!isset($admin_id)) {
                 $select_admins = mysqli_query($conn, "SELECT * FROM `users` WHERE user_type = 'admin'") or die('query failed');
                 $number_of_admins = mysqli_num_rows($select_admins);
                 ?>
-                <p>admins</p>
+                <p>Admins</p>
                 <h3><?php echo $number_of_admins; ?></h3>
             </div>
 
@@ -114,16 +114,16 @@ if (!isset($admin_id)) {
                 $select_account = mysqli_query($conn, "SELECT * FROM `users`") or die('query failed');
                 $number_of_account = mysqli_num_rows($select_account);
                 ?>
-                <p>total accounts</p>
+                <p>Total accounts</p>
                 <h3><?php echo $number_of_account; ?></h3>
             </div>
 
             <div class="box">
                 <?php
-                $select_messages = mysqli_query($conn, "SELECT * FROM `message`") or die('query failed');
+                $select_messages = mysqli_query($conn, "SELECT * FROM `message` WHERE date_time > NOW() - INTERVAL 1 DAY") or die('query failed');
                 $number_of_messages = mysqli_num_rows($select_messages);
                 ?>
-                <p>new messages</p>
+                <p>Recent messages</p>
                 <h3><?php echo $number_of_messages; ?></h3>
             </div>
 
@@ -132,7 +132,7 @@ if (!isset($admin_id)) {
                 $select_messages = mysqli_query($conn, "SELECT * FROM `reviews`") or die('query failed');
                 $number_of_messages = mysqli_num_rows($select_messages);
                 ?>
-                <p>reviews</p>
+                <p>Reviews</p>
                 <h3><?php echo $number_of_messages; ?></h3>
             </div>
 

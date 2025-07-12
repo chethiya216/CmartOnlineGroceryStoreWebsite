@@ -18,12 +18,12 @@ if (isset($message)) {
         <a href="admin_page.php" class="logo">Admin Panel<span>/Dashboard</span></a>
 
         <nav class="navbar">
-            <a href="admin_page.php">home</a>
-            <a href="admin_products.php">products</a>
-            <a href="admin_orders.php">orders</a>
-            <a href="admin_users.php">users</a>
-            <a href="admin_contacts.php">messages</a>
-            <a href="admin_reviews.php">reviews</a>
+            <a href="admin_page.php">Home</a>
+            <a href="admin_products.php">Products</a>
+            <a href="admin_orders.php">Orders</a>
+            <a href="admin_users.php">Users</a>
+            <a href="admin_contacts.php">Messages</a>
+            <a href="admin_reviews.php">Reviews</a>
         </nav>
 
         <div class="icons">
@@ -32,11 +32,10 @@ if (isset($message)) {
         </div>
 
         <div class="account-box">
-            
-            <p>username : <span><?php echo $_SESSION['admin_name']; ?></span></p>
-            <p>email : <span><?php echo $_SESSION['admin_email']; ?></span></p>
-            <a href="logout.php" class="delete-btn">logout</a>
-            <div>new <a href="admin_login.php">login</a> | <a href="admin_register.php">register</a></div>
+            <p>Username : <span><?php echo $_SESSION['admin_name']; ?></span></p>
+            <p>Email : <span><?php echo $_SESSION['admin_email']; ?></span></p>
+            <a href="logout.php" class="delete-btn">Logout</a>
+            <div>New <a href="admin_login.php">Login</a> | <a href="admin_register.php">Register</a></div>
         </div>
 
     </div>

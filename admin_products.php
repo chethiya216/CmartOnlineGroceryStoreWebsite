@@ -179,7 +179,7 @@ if (isset($_POST['update_product'])) {
             <?php
                 }
             } else {
-                echo '<p class="empty">no products added yet!</p>';
+                echo '<p class="empty">No products added yet!</p>';
             }
             ?>
         </div>
