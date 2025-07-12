@@ -171,11 +171,13 @@ section{
 }
 
 .delete-btn{
-   background-color: maroon
+   background-color: red;
+   color:white;
 }
 
 .delete-btn:hover{
-   background-color: red;
+   background-color: maroon;
+   color: white;
 }
 
 .white-btn:hover{
