@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2024 at 02:29 PM
+-- Generation Time: Jul 13, 2025 at 06:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,12 +29,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cart` (
   `id` int(100) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `user_id` int(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `price` int(100) NOT NULL,
   `quantity` int(100) NOT NULL,
   `image` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `product_id`, `user_id`, `name`, `price`, `quantity`, `image`) VALUES
+(173, 28, 3, 'Red Apple', 600, 1, '6.png');
 
 -- --------------------------------------------------------
 
@@ -47,16 +55,17 @@ CREATE TABLE `message` (
   `user_id` int(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `message` varchar(500) NOT NULL
+  `message` varchar(500) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `message`
 --
 
-INSERT INTO `message` (`id`, `user_id`, `name`, `email`, `message`) VALUES
-(37, 3, 'Chethaka Lakshan', 'chethakalakshan5@gmail.com', 'dn hari wge'),
-(38, 3, 'mahathun', 'maha@gmail.com', 'puwak nedda');
+INSERT INTO `message` (`id`, `user_id`, `name`, `email`, `message`, `date_time`) VALUES
+(39, 3, 'Chethiya ', 'chethakalakshan5@gmail.com', 'Test ', '2025-07-03 08:59:33'),
+(40, 3, 'Chethaka Lakshan', 'chethakalakshan5@gmail.com', 'gdhbdh', '2025-07-05 07:15:26');
 
 -- --------------------------------------------------------
 
@@ -82,12 +91,11 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `name`, `number`, `email`, `method`, `total_products`, `total_price`, `placed_on`, `payment_status`) VALUES
-(26, 3, 'santa', '0779872446', 's@gmail.com', 'cash on delivery', ' apples (4)  Carrots (2) ', 250, '10-Jun-2024', 'will arrive soon'),
-(27, 3, 'santa', '0779872446', 's@gmail.com', 'cash on delivery', ' apples (1) ', 50, '10-Jun-2024', 'will arrive soon'),
-(28, 3, 'santa', '0779872446', 's@gmail.com', 'cash on delivery', ' apples (2) ', 100, '10-Jun-2024', 'will arrive soon'),
-(29, 3, 'santa', '0779872446', 's@gmail.com', 'cash on delivery', ' apples (4) ', 200, '10-Jun-2024', 'will arrive soon'),
-(30, 3, 'santa', '0779872446', 's@gmail.com', 'cash on delivery', ' cookies (1) ', 35, '10-Jun-2024', 'pending'),
-(31, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'cash on delivery', ' banana (1) ', 10, '15-Jun-2024', 'pending');
+(32, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'cash on delivery', ' Milk  (1) ', 320, '28-Jun-2025', 'will arrive soon'),
+(33, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'cash on delivery', ' Tomatoes (1) ', 700, '28-Jun-2025', 'will arrive soon'),
+(34, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'cash on delivery', ' Oil (5) ', 2800, '28-Jun-2025', 'will arrive soon'),
+(37, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'credit card', ' Red Apple (2) ', 1200, '03-Jul-2025', 'completed'),
+(38, 20, 'anjana', '0766206938', 'an@gmail.com', 'cash on delivery', ' Orange (4) ', 1600, '05-Jul-2025', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -99,21 +107,21 @@ CREATE TABLE `products` (
   `id` int(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `price` int(100) NOT NULL,
-  `image` varchar(100) NOT NULL
+  `image` varchar(100) NOT NULL,
+  `qty` text NOT NULL,
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `price`, `image`) VALUES
-(3, 'cookies', 35, 'Black Brown Vintage Tree & Root Logo.png'),
-(6, 'apples', 50, '1.png'),
-(7, 'banana', 10, '2.png'),
-(8, 'berry mix', 10, '3.png'),
-(9, 'Carrots', 25, '4.png'),
-(10, 'Potatoes', 120, '5.png'),
-(11, 'leaves', 12, '6.png');
+INSERT INTO `products` (`id`, `name`, `price`, `image`, `qty`, `description`) VALUES
+(14, 'Chese', 1420, '9.png', '0', 'This is cheese'),
+(18, 'Orange', 400, '5.png', '196', 'This is orange'),
+(25, 'Green Beans 1KG', 450, '10.png', '98', 'This is green beans'),
+(27, 'Bell Pepper', 300, '4.png', '100', 'This is bell pepper'),
+(28, 'Red Apple', 600, '6.png', '93', 'This is red apple from america.');
 
 -- --------------------------------------------------------
 
@@ -134,8 +142,7 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `message_id`, `r_date`, `r_name`, `r_comment`) VALUES
-(68, 37, '2024-06-15', 'Chethaka Lakshan', 'dn hari wge'),
-(69, 38, '2024-06-15', 'mahathun', 'puwak nedda');
+(70, 40, '2025-07-05', 'Chethaka Lakshan', 'gdhbdh');
 
 -- --------------------------------------------------------
 
@@ -156,8 +163,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `user_type`) VALUES
-(3, 'ChethiyaLak', 'chethi@gmail.com', '5ccdb2466f905460dba169aadc82936a', 'user'),
-(13, 'Chami', 'chami@gmail.com', '5ccdb2466f905460dba169aadc82936a', 'admin');
+(3, 'ChethiyaLakshan', 'chethi@gmail.com', '5ccdb2466f905460dba169aadc82936a', 'user'),
+(13, 'Chami', 'chami@gmail.com', '5ccdb2466f905460dba169aadc82936a', 'admin'),
+(18, 'Heshan Umayanga', 'hesha@gmail.com', '5ccdb2466f905460dba169aadc82936a', 'user'),
+(19, 'anjana', 'anjana@gmail.com', 'c90d197ed2e6f07d48cc43d964f5de64', 'user');
 
 --
 -- Indexes for dumped tables
@@ -167,7 +176,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `user_type`) VALUES
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_cart_product` (`product_id`);
 
 --
 -- Indexes for table `message`
@@ -208,41 +218,47 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `fk_cart_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `reviews`
