@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2025 at 06:44 AM
+-- Generation Time: Feb 12, 2026 at 04:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,13 +36,6 @@ CREATE TABLE `cart` (
   `quantity` int(100) NOT NULL,
   `image` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `product_id`, `user_id`, `name`, `price`, `quantity`, `image`) VALUES
-(173, 28, 3, 'Red Apple', 600, 1, '6.png');
 
 -- --------------------------------------------------------
 
@@ -95,7 +88,8 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `number`, `email`, `method`, `tot
 (33, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'cash on delivery', ' Tomatoes (1) ', 700, '28-Jun-2025', 'will arrive soon'),
 (34, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'cash on delivery', ' Oil (5) ', 2800, '28-Jun-2025', 'will arrive soon'),
 (37, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'credit card', ' Red Apple (2) ', 1200, '03-Jul-2025', 'completed'),
-(38, 20, 'anjana', '0766206938', 'an@gmail.com', 'cash on delivery', ' Orange (4) ', 1600, '05-Jul-2025', 'Completed');
+(38, 20, 'anjana', '0766206938', 'an@gmail.com', 'cash on delivery', ' Orange (4) ', 1600, '05-Jul-2025', 'Completed'),
+(39, 3, 'Chethaka Lakshan', '0779872446', 'chethakalakshan5@gmail.com', 'cash on delivery', ' Red Apple (1) ', 600, '12-Feb-2026', 'pending');
 
 -- --------------------------------------------------------
 
@@ -121,7 +115,7 @@ INSERT INTO `products` (`id`, `name`, `price`, `image`, `qty`, `description`) VA
 (18, 'Orange', 400, '5.png', '196', 'This is orange'),
 (25, 'Green Beans 1KG', 450, '10.png', '98', 'This is green beans'),
 (27, 'Bell Pepper', 300, '4.png', '100', 'This is bell pepper'),
-(28, 'Red Apple', 600, '6.png', '93', 'This is red apple from america.');
+(28, 'Red Apple', 600, '6.png', '92', 'This is red apple from america.');
 
 -- --------------------------------------------------------
 
@@ -136,13 +130,6 @@ CREATE TABLE `reviews` (
   `r_name` varchar(50) NOT NULL,
   `r_comment` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `reviews`
---
-
-INSERT INTO `reviews` (`id`, `message_id`, `r_date`, `r_name`, `r_comment`) VALUES
-(70, 40, '2025-07-05', 'Chethaka Lakshan', 'gdhbdh');
 
 -- --------------------------------------------------------
 
@@ -230,7 +217,7 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `products`
